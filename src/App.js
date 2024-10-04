@@ -8,8 +8,8 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <MainDrawer />
-        {/* <Dashboard /> */}
+        {/* <MainDrawer /> */}
+        <Dashboard />
       </div>
     </Provider>
   );
