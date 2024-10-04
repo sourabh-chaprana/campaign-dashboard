@@ -25,7 +25,7 @@ import {
   ChevronRight as ChevronRightIcon,
 } from "@mui/icons-material";
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 const notificationWidth = 300;
 
 const Dashboard = () => {
@@ -60,13 +60,27 @@ const Dashboard = () => {
           },
         }}
       >
+       
+
         <Box sx={{ padding: 2 }}>
-          <IconButton onClick={toggleLeftDrawer}>
-            <ChevronLeftIcon />
-          </IconButton>
           <Typography variant="h6" sx={{ marginBottom: 2 }}>
             Favorite
           </Typography>
+
+          {leftOpen && ( <IconButton
+        onClick={toggleLeftDrawer}
+        sx={{
+          position: "absolute",
+          right: '20px',
+          top: "10px",
+          zIndex: 1300,
+          bgcolor: "#fff",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          "&:hover": { bgcolor: "#f0f0f0" },
+        }}
+      >
+        {leftOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      </IconButton>)}
           <List>
             <ListItem button>
               <ListItemIcon>
@@ -123,7 +137,7 @@ const Dashboard = () => {
       </Drawer>
 
       {/* Toggle Button for Left Drawer */}
-      <IconButton
+      {/* {leftOpen? <IconButton
         onClick={toggleLeftDrawer}
         sx={{
           position: "absolute",
@@ -136,7 +150,25 @@ const Dashboard = () => {
         }}
       >
         {leftOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-      </IconButton>
+      </IconButton>:''  } */}
+
+
+
+{!leftOpen && <IconButton
+        onClick={toggleLeftDrawer}
+        sx={{
+          position: "absolute",
+          left: leftOpen ? drawerWidth : 0,
+          top: "10px",
+          zIndex: 1300,
+          bgcolor: "#fff",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          "&:hover": { bgcolor: "#f0f0f0" },
+        }}
+      >
+        {leftOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      </IconButton>  }
+      
 
       {/* Main Dashboard Content */}
       <Box
@@ -207,9 +239,21 @@ const Dashboard = () => {
         }}
       >
         <Box sx={{ padding: 2 }}>
-          <IconButton onClick={toggleRightDrawer}>
-            <ChevronRightIcon />
-          </IconButton>
+      {rightOpen &&   <IconButton
+        onClick={toggleRightDrawer}
+        sx={{
+          position: "absolute",
+          left: '15px',
+          top: "10px",
+          zIndex: 1300,
+          bgcolor: "#fff",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          "&:hover": { bgcolor: "#f0f0f0" },
+        }}
+      >
+        {rightOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        </IconButton>
+        }
           <Typography variant="h6">Notification Center</Typography>
           <List>
             <ListItem>
@@ -238,6 +282,8 @@ const Dashboard = () => {
       </Drawer>
 
       {/* Toggle Button for Right Drawer */}
+
+      {!rightOpen && 
       <IconButton
         onClick={toggleRightDrawer}
         sx={{
@@ -251,7 +297,7 @@ const Dashboard = () => {
         }}
       >
         {rightOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-      </IconButton>
+      </IconButton>}
     </Box>
   );
 };
