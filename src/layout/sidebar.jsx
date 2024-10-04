@@ -1,198 +1,308 @@
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import React, { useState } from "react";
+import {
+  Box,
+  Grid,
+  Typography,
+  Card,
+  CardContent,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  IconButton,
+  Drawer,
+} from "@mui/material";
+import {
+  Dashboard as DashboardIcon,
+  Build as BuildIcon,
+  TrendingUp as TrendingUpIcon,
+  BarChart as BarChartIcon,
+  People as PeopleIcon,
+  Notifications as NotificationsIcon,
+  Help as HelpIcon,
+  ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon,
+} from "@mui/icons-material";
+import Notification from "../components/Notification";
 
-const drawerWidth = 240;
+const drawerWidth = 300;
+const notificationWidth = 300;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'openLeft' && prop !== 'openRight' })(
-  ({ theme, openLeft, openRight }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create(['margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: openLeft ? `${drawerWidth}px` : 0,
-    marginRight: openRight ? `${drawerWidth}px` : 0,
-    transition: theme.transitions.create(['margin'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-);
+const MainDrawer = () => {
+  // States for left and right drawers
+  const [leftOpen, setLeftOpen] = useState(true);
+  const [rightOpen, setRightOpen] = useState(true);
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'openLeft' && prop !== 'openRight',
-})(({ theme, openLeft, openRight }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  width: `calc(100% - ${(openLeft ? drawerWidth : 0) + (openRight ? drawerWidth : 0)}px)`,
-  marginLeft: openLeft ? `${drawerWidth}px` : 0,
-  marginRight: openRight ? `${drawerWidth}px` : 0,
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.easeOut,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-}));
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
-
-export default function DualDrawer() {
-  const theme = useTheme();
-  const [openLeft, setOpenLeft] = React.useState(true);  // Default to open
-  const [openRight, setOpenRight] = React.useState(true);  // Default to open
-
-  const handleDrawerOpenLeft = () => {
-    setOpenLeft(true);
+  // Toggle Left Drawer
+  const toggleLeftDrawer = () => {
+    setLeftOpen(!leftOpen);
   };
 
-  const handleDrawerCloseLeft = () => {
-    setOpenLeft(false);
-  };
-
-  const handleDrawerOpenRight = () => {
-    setOpenRight(true);
-  };
-
-  const handleDrawerCloseRight = () => {
-    setOpenRight(false);
+  // Toggle Right Drawer
+  const toggleRightDrawer = () => {
+    setRightOpen(!rightOpen);
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" openLeft={openLeft} openRight={openRight}>
-        <Toolbar>
-          {/* Left Drawer Toggle */}
-          <IconButton
-            color="inherit"
-            aria-label="open left drawer"
-            onClick={handleDrawerOpenLeft}
-            edge="start"
-            sx={{ mr: 2, ...(openLeft && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Typography variant="h6" noWrap component="div">
-            Dual Drawer Example
-          </Typography>
-
-          {/* Add a Spacer to push right icon to the right */}
-          <Box sx={{ flexGrow: 1 }} /> 
-
-          {/* Right Drawer Toggle */}
-          <IconButton
-            color="inherit"
-            aria-label="open right drawer"
-            onClick={handleDrawerOpenRight}
-            edge="end"
-            sx={{ ml: 2, ...(openRight && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-
-      {/* Left Drawer */}
+    <Box sx={{ display: "flex", height: "100vh", bgcolor: "#f4f5f7" }}>
+      {/* Left Sidebar Drawer */}
       <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
         variant="persistent"
         anchor="left"
-        open={openLeft}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerCloseLeft}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-
-      {/* Right Drawer */}
-      <Drawer
+        open={leftOpen}
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          '& .MuiDrawer-paper': {
+          "& .MuiDrawer-paper": {
             width: drawerWidth,
-            boxSizing: 'border-box',
+            boxSizing: "border-box",
+            boxShadow: "3px 0 5px rgba(0, 0, 0, 0.1)",
           },
         }}
-        variant="persistent"
-        anchor="right"
-        open={openRight}
       >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerCloseRight}>
-            <ChevronRightIcon />
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
+       
+
+        <Box sx={{ padding: 2 }}>
+          <Typography variant="h6" sx={{ marginBottom: 2 }}>
+            Favorite
+          </Typography>
+
+          {leftOpen && ( <IconButton
+        onClick={toggleLeftDrawer}
+        sx={{
+          position: "absolute",
+          right: '20px',
+          top: "10px",
+          zIndex: 1300,
+          bgcolor: "#fff",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          "&:hover": { bgcolor: "#f0f0f0" },
+        }}
+      >
+        {leftOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      </IconButton>)}
+          <List>
+            <ListItem button>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
             </ListItem>
-          ))}
-        </List>
+            <ListItem button>
+              <ListItemIcon>
+                <BuildIcon />
+              </ListItemIcon>
+              <ListItemText primary="Customization Options" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <TrendingUpIcon />
+              </ListItemIcon>
+              <ListItemText primary="Campaign Trend" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Target Audience" />
+            </ListItem>
+          </List>
+          <Divider />
+          <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2 }}>
+            Main Menu
+          </Typography>
+          <List>
+            <ListItem button>
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Budget Allocation" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Content Creation Tools" />
+            </ListItem>
+          </List>
+          {/* Help Center */}
+          <Card sx={{ marginTop: 2 }}>
+            <CardContent>
+              <HelpIcon color="primary" />
+              <Typography variant="body2">Help Center</Typography>
+              <Typography variant="caption">24/7 Online Support</Typography>
+            </CardContent>
+          </Card>
+        </Box>
       </Drawer>
 
-      <Main openLeft={openLeft} openRight={openRight}>
-        <DrawerHeader />
-        <Typography>
-          This is the main content area. The layout adjusts to account for both sidebars.
+      {/* Toggle Button for Left Drawer */}
+      {/* {leftOpen? <IconButton
+        onClick={toggleLeftDrawer}
+        sx={{
+          position: "absolute",
+          left: leftOpen ? drawerWidth : 0,
+          top: "10px",
+          zIndex: 1300,
+          bgcolor: "#fff",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          "&:hover": { bgcolor: "#f0f0f0" },
+        }}
+      >
+        {leftOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      </IconButton>:''  } */}
+
+
+
+{!leftOpen && <IconButton
+        onClick={toggleLeftDrawer}
+        sx={{
+          position: "absolute",
+          left: leftOpen ? drawerWidth : 0,
+          top: "10px",
+          zIndex: 1300,
+          bgcolor: "#fff",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          "&:hover": { bgcolor: "#f0f0f0" },
+        }}
+      >
+        {leftOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      </IconButton>  }
+      
+
+      {/* Main Dashboard Content */}
+      <Box
+        sx={{
+          flexGrow: 1,
+          padding: 3,
+          transition: "margin-left 0.3s ease-out, margin-right 0.3s ease-out",
+          marginLeft: leftOpen ? `${drawerWidth}px` : "0px",
+          marginRight: rightOpen ? `${notificationWidth}px` : "0px",
+        }}
+      >
+        <Typography variant="h4">Your total revenue</Typography>
+        <Typography variant="h3" sx={{ marginBottom: 3 }}>
+          90,238.7
         </Typography>
-      </Main>
+
+        {/* Cards */}
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Card>
+              <CardContent>
+                <Typography variant="h5">Earning</Typography>
+                <Typography variant="h4">45k</Typography>
+                <Typography variant="body2">15% This is Card title</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={4}>
+            <Card>
+              <CardContent>
+                <Typography variant="h5">New Leads</Typography>
+                <Typography variant="h4">22</Typography>
+                <Typography variant="body2">15% This is Card title</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={4}>
+            <Card>
+              <CardContent>
+                <Typography variant="h5">Campaigns</Typography>
+                <Typography variant="h4">4</Typography>
+                <Typography variant="body2">12% This is Card title</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+
+        {/* Monthly Sales Chart */}
+        <Typography variant="h5" sx={{ marginTop: 4 }}>
+          Monthly Sales
+        </Typography>
+        {/* Add chart here (e.g. with Recharts or Chart.js) */}
+      </Box>
+
+      {/* Right Sidebar Drawer */}
+      <Drawer
+        variant="persistent"
+        anchor="right"
+        open={rightOpen}
+        sx={{
+          width: notificationWidth,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: notificationWidth,
+            boxSizing: "border-box",
+            boxShadow: "-3px 0 5px rgba(0, 0, 0, 0.1)",
+          },
+        }}
+      >
+        <Box sx={{ padding: 2 }}>
+      {rightOpen &&   <IconButton
+        onClick={toggleRightDrawer}
+        sx={{
+          position: "absolute",
+          left: '15px',
+          top: "10px",
+          zIndex: 1300,
+          bgcolor: "#fff",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          "&:hover": { bgcolor: "#f0f0f0" },
+        }}
+      >
+        {rightOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        </IconButton>
+        }
+          <Typography variant="h6">Notification Center</Typography>
+
+          <Notification />
+          <List>
+            <ListItem>
+              <ListItemIcon>
+                <NotificationsIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText
+                primary="Your ad has been approved"
+                secondary="Apr 4, 2024"
+              />
+            </ListItem>
+            {/* More notifications */}
+          </List>
+          <Divider sx={{ marginY: 2 }} />
+          <Typography variant="h6">Team Members</Typography>
+          <List>
+            <ListItem>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Bessie Cooper" secondary="Web Designer" />
+            </ListItem>
+            {/* More team members */}
+          </List>
+        </Box>
+      </Drawer>
+
+      {/* Toggle Button for Right Drawer */}
+
+      {!rightOpen && 
+      <IconButton
+        onClick={toggleRightDrawer}
+        sx={{
+          position: "absolute",
+          right: rightOpen ? notificationWidth : 0,
+          top: "10px",
+          zIndex: 1300,
+          bgcolor: "#fff",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          "&:hover": { bgcolor: "#f0f0f0" },
+        }}
+      >
+        {rightOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+      </IconButton>}
     </Box>
   );
-}
+};
+
+export default MainDrawer;
