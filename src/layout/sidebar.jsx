@@ -25,9 +25,10 @@ import {
   ChevronRight as ChevronRightIcon,
 } from "@mui/icons-material";
 import Notification from "../components/Notification";
+import DashboardCard from "../pages/dashboard";
 
 const drawerWidth = 300;
-const notificationWidth = 300;
+const notificationWidth = 350;
 
 const MainDrawer = () => {
   // States for left and right drawers
@@ -43,6 +44,9 @@ const MainDrawer = () => {
   const toggleRightDrawer = () => {
     setRightOpen(!rightOpen);
   };
+  const mainContentWidth = `calc(100% - ${
+    (leftOpen ? drawerWidth : 0) + (rightOpen ? notificationWidth : 0)
+  }px)`;
 
   return (
     <Box sx={{ display: "flex", height: "100vh", bgcolor: "#f4f5f7" }}>
@@ -137,22 +141,7 @@ const MainDrawer = () => {
         </Box>
       </Drawer>
 
-      {/* Toggle Button for Left Drawer */}
-      {/* {leftOpen? <IconButton
-        onClick={toggleLeftDrawer}
-        sx={{
-          position: "absolute",
-          left: leftOpen ? drawerWidth : 0,
-          top: "10px",
-          zIndex: 1300,
-          bgcolor: "#fff",
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-          "&:hover": { bgcolor: "#f0f0f0" },
-        }}
-      >
-        {leftOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-      </IconButton>:''  } */}
-
+  
 
 
 {!leftOpen && <IconButton
@@ -174,11 +163,22 @@ const MainDrawer = () => {
       {/* Main Dashboard Content */}
       <Box
         sx={{
-          flexGrow: 1,
+        //   flexGrow: 1,
           padding: 3,
           transition: "margin-left 0.3s ease-out, margin-right 0.3s ease-out",
-          marginLeft: leftOpen ? `${drawerWidth}px` : "0px",
-          marginRight: rightOpen ? `${notificationWidth}px` : "0px",
+        //   marginLeft: leftOpen ? `${drawerWidth}px` : "0px",
+        //   marginRight: rightOpen ? `${notificationWidth}px` : "0px",
+        // width: mainContentWidth, 
+        // paddingLeft: leftOpen ? `${drawerWidth}px` : "16px",
+        // paddingRight: rightOpen ? `${notificationWidth}px` : "16px",
+        // minWidth: "calc(100% - 300px)",
+        paddingLeft: leftOpen ? `${drawerWidth}px` : "16px",
+        paddingRight: rightOpen ? `${notificationWidth}px` : "16px",
+        width: `calc(100% - ${leftOpen ? drawerWidth : 0}px - ${
+          rightOpen ? notificationWidth : 0
+        }px)`, // Dynamically adjust the width to prevent overflow
+        minWidth: 0, // Prevents the content from overflowing
+        boxSizing: "border-box",
         }}
       >
         <Typography variant="h4">Your total revenue</Typography>
@@ -187,35 +187,7 @@ const MainDrawer = () => {
         </Typography>
 
         {/* Cards */}
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h5">Earning</Typography>
-                <Typography variant="h4">45k</Typography>
-                <Typography variant="body2">15% This is Card title</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h5">New Leads</Typography>
-                <Typography variant="h4">22</Typography>
-                <Typography variant="body2">15% This is Card title</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h5">Campaigns</Typography>
-                <Typography variant="h4">4</Typography>
-                <Typography variant="body2">12% This is Card title</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+        <DashboardCard />
 
         {/* Monthly Sales Chart */}
         <Typography variant="h5" sx={{ marginTop: 4 }}>
@@ -258,18 +230,7 @@ const MainDrawer = () => {
           <Typography variant="h6">Notification Center</Typography>
 
           <Notification />
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <NotificationsIcon color="primary" />
-              </ListItemIcon>
-              <ListItemText
-                primary="Your ad has been approved"
-                secondary="Apr 4, 2024"
-              />
-            </ListItem>
-            {/* More notifications */}
-          </List>
+    
           <Divider sx={{ marginY: 2 }} />
           <Typography variant="h6">Team Members</Typography>
           <List>

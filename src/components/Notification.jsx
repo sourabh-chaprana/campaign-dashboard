@@ -36,12 +36,12 @@ export default function Notification() {
         {/* First Notification */}
         <ListItemButton selected={read > 0}>
           <ListItemAvatar>
-            <Avatar sx={{ color: 'success.main', bgcolor: 'success.lighter' }}>
+            <Avatar sx={{ color: 'success.main', bgcolor: 'transparent' }}>
               <GiftOutlined />
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary={<Typography variant="subtitle1">Your ad has been approved and...</Typography>}
+            primary={<Typography variant="subtitle1"> ad has been approved and...</Typography>}
             secondary="Apr 4, 2024 12:29 am"
           />
         </ListItemButton>
@@ -50,12 +50,12 @@ export default function Notification() {
         {/* Second Notification */}
         <ListItemButton>
           <ListItemAvatar>
-            <Avatar sx={{ color: 'error.main', bgcolor: 'error.lighter' }}>
+            <Avatar sx={{ color: 'error.main',bgcolor: 'transparent' }}>
               <SettingOutlined />
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary={<Typography variant="subtitle1">Your campaign budget is 90%...</Typography>}
+            primary={<Typography variant="subtitle1"> campaign budget is 90%...</Typography>}
             secondary="Apr 3, 2024 10:48 am"
           />
         </ListItemButton>
@@ -64,12 +64,12 @@ export default function Notification() {
         {/* Third Notification */}
         <ListItemButton>
           <ListItemAvatar>
-            <Avatar sx={{ color: 'primary.main', bgcolor: 'primary.lighter' }}>
+            <Avatar sx={{ color: 'primary.main', bgcolor: 'transparent'}}>
               <MessageOutlined />
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary={<Typography variant="subtitle1">Congratulations! Your campaign...</Typography>}
+            primary={<Typography variant="subtitle1">Congratulations!  campaign...</Typography>}
             secondary="Mar 14, 2024 8:09 pm"
           />
         </ListItemButton>
@@ -78,12 +78,12 @@ export default function Notification() {
         {/* Fourth Notification */}
         <ListItemButton>
           <ListItemAvatar>
-            <Avatar sx={{ color: 'warning.main', bgcolor: 'warning.lighter' }}>
+            <Avatar sx={{ color: 'warning.main', bgcolor: 'transparent'}}>
               <SettingOutlined />
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary={<Typography variant="subtitle1">Your competitor has launched a...</Typography>}
+            primary={<Typography variant="subtitle1">Your competitor has  a...</Typography>}
             secondary="Mar 8, 2024 8:45 am"
           />
         </ListItemButton>
@@ -92,12 +92,12 @@ export default function Notification() {
         {/* Fifth Notification */}
         <ListItemButton>
           <ListItemAvatar>
-            <Avatar sx={{ color: 'info.main', bgcolor: 'info.lighter' }}>
+            <Avatar sx={{ color: 'info.main', bgcolor: 'transparent' }}>
               <GiftOutlined />
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary={<Typography variant="subtitle1">Our platform will undergo scheduled maintenance...</Typography>}
+            primary={<Typography variant="subtitle1">Our platform will undergo...</Typography>}
             secondary="Mar 11, 2024 5:01 pm"
           />
         </ListItemButton>
