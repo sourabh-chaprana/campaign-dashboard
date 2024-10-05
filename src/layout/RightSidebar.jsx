@@ -27,10 +27,11 @@ const RightSidebar = ({ open, toggleDrawer }) => {
       anchor="right"
       open={open}
       sx={{
-        width: notificationWidth,
+        width: open ? notificationWidth : 0, // Adjust width based on open state
+        transition: "width 0.3s ease-out",
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: notificationWidth,
+          width: open ? notificationWidth : 0, // Adjust width based on open state
           boxSizing: "border-box",
           boxShadow: "-3px 0 5px rgba(0, 0, 0, 0.1)",
         },

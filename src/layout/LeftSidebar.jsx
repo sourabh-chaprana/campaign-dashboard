@@ -33,10 +33,11 @@ const LeftSidebar = ({ open, toggleDrawer }) => {
       anchor="left"
       open={open}
       sx={{
-        width: drawerWidth,
+        width: open ? drawerWidth : 0, // Adjust width based on open state
+        transition: "width 0.3s ease-out",
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: drawerWidth,
+          width: open ? drawerWidth : 0, // Adjust width based on open state
           boxSizing: "border-box",
           boxShadow: "3px 0 5px rgba(0, 0, 0, 0.1)",
         },
