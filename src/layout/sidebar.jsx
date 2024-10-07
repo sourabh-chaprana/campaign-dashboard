@@ -166,18 +166,12 @@ const MainDrawer = () => {
         //   flexGrow: 1,
           padding: 3,
           transition: "margin-left 0.3s ease-out, margin-right 0.3s ease-out",
-        //   marginLeft: leftOpen ? `${drawerWidth}px` : "0px",
-        //   marginRight: rightOpen ? `${notificationWidth}px` : "0px",
-        // width: mainContentWidth, 
-        // paddingLeft: leftOpen ? `${drawerWidth}px` : "16px",
-        // paddingRight: rightOpen ? `${notificationWidth}px` : "16px",
-        // minWidth: "calc(100% - 300px)",
         paddingLeft: leftOpen ? `${drawerWidth}px` : "16px",
         paddingRight: rightOpen ? `${notificationWidth}px` : "16px",
         width: `calc(100% - ${leftOpen ? drawerWidth : 0}px - ${
           rightOpen ? notificationWidth : 0
-        }px)`, // Dynamically adjust the width to prevent overflow
-        minWidth: 0, // Prevents the content from overflowing
+        }px)`,
+        minWidth: 0,
         boxSizing: "border-box",
         }}
       >
