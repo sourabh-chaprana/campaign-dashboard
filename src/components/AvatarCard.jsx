@@ -12,7 +12,7 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 
 function AvatarCard() {
   return (
-    <Card sx={{ width: 300 }}>
+    <Card>
       <CardHeader
         avatar={<FacebookIcon />}
         title={
@@ -35,11 +35,13 @@ function AvatarCard() {
         }
       />
       <CardContent>
-        <Typography variant="h6">
+        <Typography variant="h6" fontWeight={'bold'} textAlign={'left'}>
           Strategic Email Newsletter Campaign for Subscriber Engagement
         </Typography>
-        <Chip label="Start: Not started" color="primary" />
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant="body2" color="textSecondary" sx={{ paddingY: '12px',  borderBottom: '1px solid rgba(0, 0, 0, 0.2)', textAlign: 'left', fontSize: '12px' }}>
+          Start: Not Started
+        </Typography>
+        <Typography variant="body2" color="textSecondary" sx={{ paddingY: '12px', textAlign: 'left', fontSize: '16px' }}>
           Last update date: Mar 27, 2024 6:23 am
         </Typography>
       </CardContent>
@@ -48,3 +50,7 @@ function AvatarCard() {
 }
 
 export default AvatarCard;
+
+
+
+{/* <Chip label="Start: Not started" color="primary" /> */ }

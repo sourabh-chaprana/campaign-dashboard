@@ -129,11 +129,23 @@ const DashboardCard = () => {
           </Card>
         </Grid>
       </Grid>
-      <Box sx={{ display: "flex", flexDirection: "row", gap: 2, mt: 5 }}>
+      {/* <Box sx={{ display: "flex", flexDirection: "row", gap: 2, mt: 5 }}>
         <AvatarCard />
         <AvatarCard />
         <AvatarCard />
-      </Box>
+      </Box> */}
+
+      <Grid container spacing={2} marginTop={5}>
+        <Grid item xs={12} sm={4}>
+          <AvatarCard />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <AvatarCard />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <AvatarCard />
+        </Grid>
+      </Grid>
     </>
   );
 };
