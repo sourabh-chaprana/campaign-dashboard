@@ -46,11 +46,11 @@ const DashboardCard = () => {
 
   return (
     <>
-        <DrawerHeader />
+        {/* <DrawerHeader /> */}
 
-      <Grid container spacing={2}>
-        {/* Earning Card */}
-        <Grid item xs={12} sm={4}>
+      {/* <Grid container spacing={2}> */}
+     
+        {/* <Grid item xs={12} sm={4}>
           <Card>
             <CardContent  sx={{paddingBottom:'5px !important'}} >
                 <Avatar sx={{ bgcolor: "teal", mr: 2 }}>
@@ -80,9 +80,9 @@ const DashboardCard = () => {
               </Box>
             </CardContent>
           </Card>
-        </Grid>
+        </Grid> */}
 
-        {/* New Leads Card */}
+{/*   
         <Grid item xs={12} sm={4}>
           <Card>
             <CardContent>
@@ -113,7 +113,7 @@ const DashboardCard = () => {
           </Card>
         </Grid>
 
-        {/* Campaigns Card */}
+      
         <Grid item xs={12} sm={4}>
           <Card>
             <CardContent>
@@ -142,15 +142,11 @@ const DashboardCard = () => {
               </Box>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
-      {/* <Box sx={{ display: "flex", flexDirection: "row", gap: 2, mt: 5 }}>
-        <AvatarCard />
-        <AvatarCard />
-        <AvatarCard />
-      </Box> */}
-
-      <Grid container spacing={2} marginTop={5}>
+        </Grid> */}
+      {/* </Grid> */}
+     
+<Card  sx={{ p: 3, mt: 5 }} elevation={3}>
+      <Grid container spacing={2} >
         <Grid item xs={12} sm={4}>
           <AvatarCard />
         </Grid>
@@ -161,6 +157,7 @@ const DashboardCard = () => {
           <AvatarCard />
         </Grid>
       </Grid>
+      </Card>
     </>
   );
 };
