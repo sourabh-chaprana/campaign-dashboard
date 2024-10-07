@@ -1,33 +1,86 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import GroupIcon from '@mui/icons-material/Group';
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import MovingIcon from '@mui/icons-material/Moving';
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import { Avatar, Chip } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
 const drawerWidth = 300;
 
+
+
+const options = [
+  {
+    title: 'Dashboard',
+    icon: <DashboardIcon />,
+  },
+  {
+    title: 'Analytics',
+    icon: <AnalyticsIcon />,
+  },
+  {
+    title: 'Audience Manager',
+    icon: <GroupIcon />,
+  },
+  {
+    title: 'Budget Allocation',
+    icon: <ContentPasteIcon />,
+  },
+  {
+    title: 'Content Library',
+    icon: <DateRangeIcon />,
+  },
+  {
+    title: 'Campaign Scheduled',
+    icon: <DateRangeIcon />,
+  },
+  {
+    title: 'Custom Report Generation',
+    icon: <ReportGmailerrorredIcon />,
+  },
+  {
+    title: 'Performance Metrics',
+    icon: <MovingIcon />,
+  },
+];
+
+
+
+
+export default function LeftSidebar({ open, toggleDrawer }) {
+  const theme = useTheme();
+  useEffect(()=>{
+
+  },[open])
+
+  
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
+    
   }),
   overflowX: 'hidden',
+  backgroundColor:`${!open ? '#00ADEB':'white'}`,
+
 });
 
 const closedMixin = (theme) => ({
@@ -52,7 +105,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 
-
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme }) => ({
     width: drawerWidth,
@@ -64,6 +116,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         props: ({ open }) => open,
         style: {
           ...openedMixin(theme),
+          
           '& .MuiDrawer-paper': openedMixin(theme),
         },
       },
@@ -78,39 +131,58 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function LeftSidebar({open, toggleDrawer}) {
-  const theme = useTheme();
 
   return (
-   <>
-    
-    {/* <Drawer variant="permanent" open={open}> */}
-    <Drawer
-      variant="permanent"
-      anchor="left"
-      open={open}
-   
-    >
+    <>
+
+      {/* <Drawer variant="permanent" open={open}> */}
+      <Drawer
+        variant="permanent"
+        anchor="left"
+        open={open}
+
+
+      >
         <DrawerHeader>
-        <IconButton
-          onClick={toggleDrawer}
-          sx={{
-            position: "absolute",
-            right: "20px",
-            top: "10px",
-            zIndex: 1300,
-            bgcolor: "#fff",
-            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-            "&:hover": { bgcolor: "#f0f0f0" },
-          }}
-        >
-          {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-        </IconButton>
+          <IconButton
+            onClick={toggleDrawer}
+            sx={{
+              position: "absolute",
+              right: "20px",
+              top: "10px",
+              zIndex: 1300,
+              bgcolor: "#fff",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+              "&:hover": { bgcolor: "#f0f0f0" },
+            }}
+          >
+            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
         </DrawerHeader>
-        <Divider />
-        <List sx={{marginTop:'20PX'}}>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+
+        {/* User Profile Section */}
+
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingY: 2 }}>
+          <Avatar
+            alt="Olivia Rhye"
+            src="https://i.pravatar.cc/300"
+            sx={{ width: open ? 70 : 40, height: open ? 70 : 40 }}
+          />
+          {open && (
+            <>
+              <Typography sx={{ fontSize: '22px', fontWeight: 'bold' }}>Olivia Rhye</Typography>
+              <Typography sx={{ fontSize: '18px', fontWeight: '600', color: '#00ADEB' }}>
+                Marketing Manager
+              </Typography>
+              <Chip icon={<EditIcon />} label="Edit Profile" color="primary" size="small" sx={{padding:'10px', marginTop:'4px'}} />
+            </>
+          )}
+        </Box>
+
+
+        <List sx={{ marginTop: '20PX' }}>
+          {options?.map((item, index) => (
+            <ListItem key={item} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={[
                   {
@@ -119,11 +191,11 @@ export default function LeftSidebar({open, toggleDrawer}) {
                   },
                   open
                     ? {
-                        justifyContent: 'initial',
-                      }
+                      justifyContent: 'initial',
+                    }
                     : {
-                        justifyContent: 'center',
-                      },
+                      justifyContent: 'center',
+                    },
                 ]}
               >
                 <ListItemIcon
@@ -131,80 +203,33 @@ export default function LeftSidebar({open, toggleDrawer}) {
                     {
                       minWidth: 0,
                       justifyContent: 'center',
+                      color: '#00ADEB'
                     },
                     open
                       ? {
-                          mr: 3,
-                        }
+                        mr: 3,
+                      }
                       : {
-                          mr: 'auto',
-                        },
+                        mr: 'auto',
+                      },
                   ]}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {item?.icon}
                 </ListItemIcon>
                 <ListItemText
-                  primary={text}
-                  sx={[
-                    open
-                      ? {
-                          opacity: 1,
-                        }
-                      : {
-                          opacity: 0,
-                        },
-                  ]}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={[
-                  {
-                    minHeight: 48,
-                    px: 2.5,
-                  },
-                  open
-                    ? {
-                        justifyContent: 'initial',
-                      }
-                    : {
-                        justifyContent: 'center',
-                      },
-                ]}
-              >
-                <ListItemIcon
+                  primary={item?.title}
                   sx={[
                     {
-                      minWidth: 0,
-                      justifyContent: 'center',
+                      fontWeight: 'bold',
+                      fontSize: '24px'
                     },
                     open
                       ? {
-                          mr: 3,
-                        }
+                        opacity: 1,
+                      }
                       : {
-                          mr: 'auto',
-                        },
-                  ]}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  sx={[
-                    open
-                      ? {
-                          opacity: 1,
-                        }
-                      : {
-                          opacity: 0,
-                        },
+                        opacity: 0,
+                      },
                   ]}
                 />
               </ListItemButton>
@@ -212,7 +237,7 @@ export default function LeftSidebar({open, toggleDrawer}) {
           ))}
         </List>
       </Drawer>
-     
-  </>
+
+    </>
   );
 }
