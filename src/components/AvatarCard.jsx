@@ -50,7 +50,3 @@ function AvatarCard() {
 }
 
 export default AvatarCard;
-
-
-
-{/* <Chip label="Start: Not started" color="primary" /> */ }
