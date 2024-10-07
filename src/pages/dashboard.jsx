@@ -52,19 +52,20 @@ const DashboardCard = () => {
         {/* Earning Card */}
         <Grid item xs={12} sm={4}>
           <Card>
-            <CardContent>
-              <Box display="flex" alignItems="center" mb={2}>
+            <CardContent  sx={{paddingBottom:'5px !important'}} >
                 <Avatar sx={{ bgcolor: "teal", mr: 2 }}>
                   <MonetizationOnIcon />
                 </Avatar>
+                <Box textAlign="left">
                 <Typography variant="h6">Earning</Typography>
-              </Box>
-              <Typography variant="h4" color="textPrimary">
+                
+              <Typography variant="h6" color="textPrimary">
                 45k
               </Typography>
               <Typography variant="body2" color="textSecondary">
                 ▲ 15% This is Card title
               </Typography>
+           
               <Box mt={2} height={100}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={data}>
@@ -75,6 +76,7 @@ const DashboardCard = () => {
                     <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
                   </LineChart>
                 </ResponsiveContainer>
+              </Box>
               </Box>
             </CardContent>
           </Card>
