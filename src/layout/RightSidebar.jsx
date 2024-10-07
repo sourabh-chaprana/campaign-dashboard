@@ -17,10 +17,25 @@ import {
 } from "@mui/icons-material";
 import TeamMembersList from "../components/TeamMemberList";
 import Notification from "../components/Notification";
+import { styled, useTheme } from '@mui/material/styles';
+
 
 const notificationWidth = 350;
 
+
+
 const RightSidebar = ({ open, toggleDrawer }) => {
+  const theme = useTheme();
+
+  const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  }));
+
   return (
     <Drawer
       variant="persistent"
@@ -37,7 +52,8 @@ const RightSidebar = ({ open, toggleDrawer }) => {
         },
       }}
     >
-      <Box sx={{ padding: 2 }}>
+
+          <DrawerHeader>
         <IconButton
           onClick={toggleDrawer}
           sx={{
@@ -52,6 +68,11 @@ const RightSidebar = ({ open, toggleDrawer }) => {
         >
           {open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton>
+
+        </DrawerHeader>
+        <Divider />   
+      <Box sx={{ padding: 2 }}>
+ 
         <Typography variant="h6">Notification Center</Typography>
         <List>
           <Notification />

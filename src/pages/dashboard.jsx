@@ -20,7 +20,7 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SearchIcon from "@mui/icons-material/Search";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import AvatarCard from "../components/AvatarCard";
-
+import { styled, useTheme } from '@mui/material/styles';
 // Sample data for graphs
 const data = [
   { name: "Jan", uv: 400, pv: 2400, amt: 2400 },
@@ -31,10 +31,23 @@ const data = [
   { name: "Jun", uv: 239, pv: 3800, amt: 2500 },
   { name: "Jul", uv: 349, pv: 4300, amt: 2100 },
 ];
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
 
 const DashboardCard = () => {
+  const theme = useTheme();
+
   return (
     <>
+        <DrawerHeader />
+
       <Grid container spacing={2}>
         {/* Earning Card */}
         <Grid item xs={12} sm={4}>
