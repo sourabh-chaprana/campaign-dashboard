@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-import "./App.css";
+import "./Global.css";
 import { Provider } from "react-redux";
 import store from "./root/store";
 import MainDrawer from "./layout/sidebar";
