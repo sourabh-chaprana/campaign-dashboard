@@ -21,24 +21,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import AvatarCard from "../components/AvatarCard";
 import { styled, useTheme } from '@mui/material/styles';
-// Sample data for graphs
-const data = [
-  { name: "Jan", uv: 400, pv: 2400, amt: 2400 },
-  { name: "Feb", uv: 300, pv: 1398, amt: 2210 },
-  { name: "Mar", uv: 200, pv: 9800, amt: 2290 },
-  { name: "Apr", uv: 278, pv: 3908, amt: 2000 },
-  { name: "May", uv: 189, pv: 4800, amt: 2181 },
-  { name: "Jun", uv: 239, pv: 3800, amt: 2500 },
-  { name: "Jul", uv: 349, pv: 4300, amt: 2100 },
-];
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
+import OrderTable from "../components/table";
+import ChooseVendor from "../components/table";
 
 
 const DashboardCard = () => {
@@ -46,104 +30,7 @@ const DashboardCard = () => {
 
   return (
     <>
-        {/* <DrawerHeader /> */}
-
-      {/* <Grid container spacing={2}> */}
-     
-        {/* <Grid item xs={12} sm={4}>
-          <Card>
-            <CardContent  sx={{paddingBottom:'5px !important'}} >
-                <Avatar sx={{ bgcolor: "teal", mr: 2 }}>
-                  <MonetizationOnIcon />
-                </Avatar>
-                <Box textAlign="left">
-                <Typography variant="h6">Earning</Typography>
-                
-              <Typography variant="h6" color="textPrimary">
-                45k
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                ▲ 15% This is Card title
-              </Typography>
-           
-              <Box mt={2} height={100}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Box>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid> */}
-
-{/*   
-        <Grid item xs={12} sm={4}>
-          <Card>
-            <CardContent>
-              <Box display="flex" alignItems="center" mb={2}>
-                <Avatar sx={{ bgcolor: "orange", mr: 2 }}>
-                  <SearchIcon />
-                </Avatar>
-                <Typography variant="h6">New Leads</Typography>
-              </Box>
-              <Typography variant="h4" color="textPrimary">
-                22
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                ▲ 15% This is Card title
-              </Typography>
-              <Box mt={2} height={100}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="uv" stroke="#ffc658" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-
-      
-        <Grid item xs={12} sm={4}>
-          <Card>
-            <CardContent>
-              <Box display="flex" alignItems="center" mb={2}>
-                <Avatar sx={{ bgcolor: "red", mr: 2 }}>
-                  <CampaignIcon />
-                </Avatar>
-                <Typography variant="h6">Campaigns</Typography>
-              </Box>
-              <Typography variant="h4" color="textPrimary">
-                4
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                ▲ 12% This is Card title
-              </Typography>
-              <Box mt={2} height={100}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="uv" stroke="#ff7300" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid> */}
-      {/* </Grid> */}
+   
      
 <Card  sx={{ p: 3, mt: 5 }} elevation={3}>
       <Grid container spacing={2} >
@@ -158,6 +45,9 @@ const DashboardCard = () => {
         </Grid>
       </Grid>
       </Card>
+
+      <ChooseVendor/>
+      
     </>
   );
 };
