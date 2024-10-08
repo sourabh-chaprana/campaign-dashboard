@@ -30,7 +30,7 @@ const teamsSlice = createSlice({
             state.loading = false;
           })
           .addCase(fetchTeamsDetailsSlice.rejected, (state, action) => {
-            state.error = action.error.message;
+            state.error = action?.error?.message;
             state.loading = false;
           });
           

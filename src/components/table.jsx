@@ -119,7 +119,7 @@
 //   };
 
 //   return (
- 
+
 //         <Card elevation={3} sx={{ p: 2 ,mt:5}}>
 //       <Box display="flex" justifyContent="space-between" my={4}>
 //         <Typography variant="h5">Campaign Status</Typography>
@@ -133,7 +133,7 @@
 //           </Button>
 //         </Box>
 //       </Box>
-      
+
 //         <TableContainer component={Paper}>
 //           <Table aria-label="campaign table">
 //           <TableHead>
@@ -149,7 +149,7 @@
 //         }}
 //       />
 //     </TableCell>
- 
+
 //     <TableCell sx={{ fontWeight: 'bold' }}>Client</TableCell>
 //     <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
 //     <TableCell sx={{ fontWeight: 'bold' }}>Country</TableCell>
@@ -184,16 +184,16 @@
 //                           }}
 //                         />
 //                       </TableCell>
-                
+
 //                       <TableCell>
 //                         <Typography>{campaign.client}</Typography>
 //                         <Typography variant="body2" color="textSecondary">
 //                           {campaign.email}
 //                         </Typography>
 //                       </TableCell>
-                    
+
 //                       <TableCell>
-                       
+
 
 //                     <Chip
 //                       className={css`
@@ -225,7 +225,7 @@
 //                         <IconButton color="error">
 //                           <Delete />
 //                         </IconButton>
-                       
+
 //                       </TableCell>
 //                     </TableRow>
 //                   );
@@ -243,7 +243,7 @@
 //           />
 //         </TableContainer>
 //       </Card>
-   
+
 //   );
 // }
 
@@ -315,9 +315,9 @@ const CampaignTable = ({
   };
 
   return (
-    <Card elevation={3} sx={{ p: 2, mt: 5 }}>
+    <Card elevation={3} sx={{ p: 3, mt: 5 }}>
       <Box display="flex" justifyContent="space-between" my={4}>
-        <Typography variant="h5">Campaign Status</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>Campaign Status</Typography>
         <Button variant="contained" color="primary" sx={{ ml: 2 }}>
           Create Campaign
         </Button>

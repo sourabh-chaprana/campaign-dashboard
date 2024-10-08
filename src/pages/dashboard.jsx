@@ -1,6 +1,8 @@
 import {
+  Box,
   Card,
   Grid,
+  Typography,
 
 } from "@mui/material";
 
@@ -46,7 +48,7 @@ const DashboardCard = () => {
 
   const dispatch = useDispatch();
   const { campaigns, totalItems, loading } = useSelector((state) => state.teamsDetails);
-  
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -72,21 +74,27 @@ const DashboardCard = () => {
     <>
 
 
-              <Card sx={{ p: 3, mt: 5 }} elevation={3}>
-              <Grid container spacing={2}>
+      <Card sx={{ p: 3, mt: 5 }} elevation={3}>
+
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', paddingY: 2 }}>
+          <Typography variant="h5" sx={{ fontWeight: 'bold' }}>Recent Campaigns</Typography>
+          <Typography sx={{ fontWeight: '600', textDecoration:'underline', cursor:'pointer' }}>View all</Typography>
+        </Box>
+
+        <Grid container spacing={2}>
           {
             cardData?.map((data, index) => {
               return (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                   <AvatarCard data={data} />
                 </Grid>
-                    );
-                  })
-                }
-              </Grid>
-           </Card>
+              );
+            })
+          }
+        </Grid>
+      </Card>
 
-        <CampaignTable
+      <CampaignTable
         campaigns={campaigns}
         totalItems={totalItems}
         page={page}
