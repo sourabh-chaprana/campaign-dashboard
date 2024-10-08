@@ -13,6 +13,8 @@ import AvatarCard from "../components/AvatarCard";
 import { styled, useTheme } from '@mui/material/styles';
 import CampaignTable from "../components/table";
 import { fetchTeamsDetailsSlice } from "../redux/teamSlice/team.slice";
+import Stepper from "../components/stepper";
+import CreateCampaign from "../components/stepper";
 
 const cardData = [
   {
@@ -66,7 +68,7 @@ const DashboardCard = () => {
     setPage(0);
   };
 
-  // console.log('teamsDetails---------------123',teamsDetails)
+  console.log('teamsDetails---------------123',campaigns)
 
   return (
     <>
@@ -92,7 +94,7 @@ const DashboardCard = () => {
         </Grid>
       </Card>
 
-      <CampaignTable
+        <CampaignTable
         campaigns={campaigns}
         totalItems={totalItems}
         page={page}
@@ -101,6 +103,9 @@ const DashboardCard = () => {
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
       />
+
+
+      {/* <CreateCampaign/> */}
 
     </>
   );

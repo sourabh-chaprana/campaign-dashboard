@@ -1,18 +1,26 @@
 import axiosInstance from '../../components/utils/axiosInstance';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 
 export const fetchTeamsDetailsThunk = async (page, rowsPerPage) => {
     try {
-        console.log('page',page.page)
-        console.log('rowP',page.rowsPerPage)
-        var response = await axiosInstance.get('http://13.232.49.252:7060/api/cm/campaign/list', {
-            params: { 
-                pageNumber: page?.page + 1,  // Assuming API is 1-indexed
-                pageSize: page?.rowsPerPage
-              }
         
-        })
+        const token = localStorage.getItem('token'); 
+
+        if (!token) {
+            toast.error('Unauthorized access. Please log in.');
+        
+        }
+        const response = await axios.get('http://13.232.49.252:7060/api/cm/campaign/list', {
+            params: { 
+                pageNumber: page?.page + 1, 
+                pageSize: page?.rowsPerPage 
+            },
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
         return response.data
        
     }
