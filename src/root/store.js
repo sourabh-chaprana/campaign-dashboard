@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import todoReducer from "./features/todo/todoSlice";
-// import todoReducer from "../redux/todoSlice/todoSlice";
-// import authReducer from "../redux/authSlice/auth.slice";
+import teamSlice from "../redux/teamSlice/team.slice";
+// import authLoginSlice from "../"
+import loginSlice from "../redux/authSlice/auth.slice";
 
 const store = configureStore({
     reducer: {
-        auth: '',
+        teamsDetails: teamSlice,
+        login:loginSlice
     },
 });
 

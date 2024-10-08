@@ -1,30 +1,31 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { addJobThunk } from "./job.thunk";
+import { fetchTeamsDetailsThunk } from "./team.thunk";
 
 
-export const addJobSlice = createAsyncThunk('addJob', addJobThunk);
+
+export const fetchTeamsDetailsSlice = createAsyncThunk('fetchTeamsDetails', fetchTeamsDetailsThunk);
 
 const initialState = {
-    jobs: [],
+    teams: [],
     data: null,
     status: 'idle',
     error: null,
 };
 
-const authSlice = createSlice({
+const teamsSlice = createSlice({
     name: "todo",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(addJobSlice.pending, (state) => {
+            .addCase(fetchTeamsDetailsSlice.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(addJobSlice.fulfilled, (state, action) => {
+            .addCase(fetchTeamsDetailsSlice.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.data = action.payload;
             })
-            .addCase(addJobSlice.rejected, (state, action) => {
+            .addCase(fetchTeamsDetailsSlice.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
             })
@@ -33,4 +34,4 @@ const authSlice = createSlice({
 
 });
 
-export default authSlice.reducer;
+export default teamsSlice.reducer;

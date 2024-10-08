@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {
   Box,
   Card,
@@ -21,10 +21,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import AvatarCard from "../components/AvatarCard";
 import { styled, useTheme } from '@mui/material/styles';
-import OrderTable from "../components/table";
-import ChooseVendor from "../components/table";
 import CampaignTable from "../components/table";
-
+import { useSelector,useDispatch } from "react-redux";
+import { fetchTeamsDetailsSlice } from "../redux/teamSlice/team.slice";
 
 const cardData = [
   {
@@ -54,7 +53,13 @@ const cardData = [
 ]
 
 const DashboardCard = () => {
-  const theme = useTheme();
+
+
+  const dispatch = useDispatch();
+  useEffect(()=>{
+  
+    dispatch(fetchTeamsDetailsSlice())
+  },[])
 
   return (
     <>

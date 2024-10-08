@@ -10,7 +10,7 @@ import DashboardCard from "./pages/dashboard";
 
 
 
-const Dashboard = () => {
+const MainLayout = () => {
   const [leftOpen, setLeftOpen] = useState(true);
   const [rightOpen, setRightOpen] = useState(true);
 
@@ -67,4 +67,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default MainLayout;
