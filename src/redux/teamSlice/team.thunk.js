@@ -2,9 +2,17 @@ import axiosInstance from '../../components/utils/axiosInstance';
 import { toast } from 'react-toastify';
 
 
-export const fetchTeamsDetailsThunk = async (data) => {
+export const fetchTeamsDetailsThunk = async (page, rowsPerPage) => {
     try {
-        var response = await axiosInstance.get('http://localhost:2000/api/alljobs', data)
+        console.log('page',page.page)
+        console.log('rowP',page.rowsPerPage)
+        var response = await axiosInstance.get('http://13.232.49.252:7060/api/cm/campaign/list', {
+            params: { 
+                pageNumber: page?.page + 1,  // Assuming API is 1-indexed
+                pageSize: page?.rowsPerPage
+              }
+        
+        })
         return response.data
        
     }

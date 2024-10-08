@@ -7,6 +7,8 @@ export const fetchTeamsDetailsSlice = createAsyncThunk('fetchTeamsDetails', fetc
 
 const initialState = {
     teams: [],
+    campaigns: [],
+    totalItems: 0,
     data: null,
     status: 'idle',
     error: null,
@@ -18,17 +20,18 @@ const teamsSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchTeamsDetailsSlice.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(fetchTeamsDetailsSlice.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.data = action.payload;
-            })
-            .addCase(fetchTeamsDetailsSlice.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.error.message;
-            })
+        .addCase(fetchTeamsDetailsSlice.pending, (state) => {
+            state.loading = true;
+          })
+          .addCase(fetchTeamsDetailsSlice.fulfilled, (state, action) => {
+            state.campaigns = action.payload.items;
+            state.totalItems = action.payload.totalItems;
+            state.loading = false;
+          })
+          .addCase(fetchTeamsDetailsSlice.rejected, (state, action) => {
+            state.error = action.error.message;
+            state.loading = false;
+          });
           
     },
 

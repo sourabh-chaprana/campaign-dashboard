@@ -12,7 +12,7 @@ import DashboardCard from "./pages/dashboard";
 
 const MainLayout = () => {
   const [leftOpen, setLeftOpen] = useState(true);
-  const [rightOpen, setRightOpen] = useState(true);
+  const [rightOpen, setRightOpen] = useState(false);
 
   const toggleLeftDrawer = () => {
     setLeftOpen(!leftOpen);

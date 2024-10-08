@@ -1,10 +1,11 @@
 import axiosInstance from '../../components/utils/axiosInstance';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 
 
 export const authLoginThunk = async (data) => {
     try {
-        const response = await axiosInstance.post("http://localhost:2000/api/login", data);
+        const response = await axios.post("http://13.232.49.252:7070/login", data);
         const { token } = response.data;
         localStorage.setItem("token", token);
         return token; // You can return more data if needed
