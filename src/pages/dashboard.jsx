@@ -68,8 +68,6 @@ const DashboardCard = () => {
     setPage(0);
   };
 
-  console.log('teamsDetails---------------123',campaigns)
-
   return (
     <>
 
