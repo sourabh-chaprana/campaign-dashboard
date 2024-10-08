@@ -12,7 +12,7 @@ import DashboardCard from "./pages/dashboard";
 
 const MainLayout = () => {
   const [leftOpen, setLeftOpen] = useState(true);
-  const [rightOpen, setRightOpen] = useState(true);
+  const [rightOpen, setRightOpen] = useState(false);
 
   const toggleLeftDrawer = () => {
     setLeftOpen(!leftOpen);
@@ -23,7 +23,7 @@ const MainLayout = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh", bgcolor: "#f4f5f7" }}>
+    <Box sx={{ display: "flex", height: "100vh",  }}>
       {/* Left Sidebar */}
       <LeftSidebar open={leftOpen} toggleDrawer={toggleLeftDrawer} />
 
@@ -36,7 +36,7 @@ const MainLayout = () => {
           flexGrow: 1,
           padding: 3,
           transition: "margin-left 0.3s ease-out, margin-right 0.3s ease-out",
-          backgroundColor: "#FFF",
+          backgroundColor: "#f9f9f9",
           overflowX: "hidden", 
         }}
       >

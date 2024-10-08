@@ -9,6 +9,7 @@ import {
   Divider,
   IconButton,
   Drawer,
+  Card,
 } from "@mui/material";
 import {
   People as PeopleIcon,
@@ -20,7 +21,7 @@ import Notification from "../components/Notification";
 import { styled, useTheme } from '@mui/material/styles';
 
 
-const notificationWidth = 350;
+const notificationWidth = 380;
 
 
 
@@ -53,7 +54,7 @@ const RightSidebar = ({ open, toggleDrawer }) => {
       }}
     >
 
-          <DrawerHeader>
+      <DrawerHeader>
         <IconButton
           onClick={toggleDrawer}
           sx={{
@@ -69,24 +70,26 @@ const RightSidebar = ({ open, toggleDrawer }) => {
           {open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton>
 
-        </DrawerHeader>
-        <Divider />   
+      </DrawerHeader>
+      <Divider />
       <Box sx={{ padding: 2 }}>
- 
-       
-        <Typography variant="h6">Team Members</Typography>
-        <List>
-          {/* More team members */}
-          <TeamMembersList />
-        </List>
-        <Divider sx={{ marginY: 2 }} />
-         
 
-        <Typography variant="h6">Notification Center</Typography>
-         <List>
-          <Notification />
-          {/* More notifications */}
-        </List>
+        <Card sx={{ padding: 1 }}>
+          <Typography variant="h6">Notification Center</Typography>
+          <List>
+            <Notification />
+            {/* More notifications */}
+          </List>
+        </Card>
+        <Divider sx={{ marginY: 2 }} />
+
+        <Card sx={{ padding: 1 }}>
+          <Typography variant="h6">Team Members</Typography>
+          <List>
+            {/* More team members */}
+            <TeamMembersList />
+          </List>
+        </Card>
       </Box>
     </Drawer>
   );

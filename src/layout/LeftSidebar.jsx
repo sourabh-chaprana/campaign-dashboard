@@ -60,6 +60,11 @@ const options = [
   },
 ];
 
+const settingsOption = {
+  title: 'Settings',
+  icon: <SettingsIcon />,
+};
+
 export default function LeftSidebar({ open, toggleDrawer }) {
   const theme = useTheme();
 
@@ -68,12 +73,12 @@ export default function LeftSidebar({ open, toggleDrawer }) {
     transition: "width 0.3s ease-out",
     overflowX: 'hidden',
     '& .MuiDrawer-paper': {
-       overflow: 'hidden',
+      overflow: 'hidden',
       width: open ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
       transition: "width 0.3s ease-out",
       backgroundColor: open ? 'white' : '#00ADEB', // For example, customize background color based on `open`
     },
-   
+
   };
 
   return (
@@ -84,14 +89,14 @@ export default function LeftSidebar({ open, toggleDrawer }) {
         open={open}
         sx={drawerSx} // Applying the transition and styles directly with `sx`
       >
-        
+
         <br />
         {/* User Profile Section */}
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingY: 2 }}>
           <Avatar
             alt="Olivia Rhye"
             src="https://i.pravatar.cc/300"
-            sx={{ width: open ? 95 : 45, height: open ? 95 : 45, cursor:'pointer' }}
+            sx={{ width: open ? 95 : 45, height: open ? 95 : 45, cursor: 'pointer' }}
             onClick={toggleDrawer}
           />
           {open && (
@@ -111,80 +116,87 @@ export default function LeftSidebar({ open, toggleDrawer }) {
           )}
         </Box>
 
-        <List sx={{ marginTop: '20PX' }}>
-          {options.map((item, index) => (
-            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  height: open? 48 : 50,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2,
-                }}
-              >
-                <ListItemIcon
+        <Box sx={{ flexGrow: 1 }}>
+          <List sx={{ marginTop: '20PX' }}>
+            {options.map((item, index) => (
+              <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    justifyContent: 'center',
-                    color: open?'#00ADEB':'white',
-                  
-                    mr: open ? 2 : 'auto',
+                    height: open ? 48 : 50,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2,
                   }}
                 >
-                    {React.cloneElement(item.icon, { sx: { fontSize: open ? '30px' : '25px' } })}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.title}
-                  primaryTypographyProps={{
-                    fontWeight: '600',
-                    fontSize: '15px',
-                  }}
-                  sx={{
-                    opacity: open ? 1 : 0,
-                    
-                    transition: 'opacity 0.3s ease-out', // Ensure the text transitions as well
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                      color: open ? '#00ADEB' : 'white',
 
-        <List sx={{ position:'absolute',bottom:'12px',left:'4px' }}>
-      
-            <ListItem  disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
+                      mr: open ? 2 : 'auto',
+                    }}
+                  >
+                    {React.cloneElement(item.icon, { sx: { fontSize: open ? '30px' : '25px' } })}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.title}
+                    primaryTypographyProps={{
+                      fontWeight: '600',
+                      fontSize: '15px',
+                    }}
+                    sx={{
+                      opacity: open ? 1 : 0,
+
+                      transition: 'opacity 0.3s ease-out', // Ensure the text transitions as well
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+
+        <List>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              sx={[
+                {
+                  minHeight: 48,
+                  px: 2.5,
+                },
+                open
+                  ? {
+                    justifyContent: 'initial',
+                  }
+                  : {
+                    justifyContent: 'center',
+                  },
+              ]}
+            >
+              <ListItemIcon
                 sx={{
-                  height: open? 48 : 50,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2,
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                  color: open ? '#00ADEB' : 'white'
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    justifyContent: 'center',
-                    color: open?'#00ADEB':'white',
-                  
-                    mr: open ? 2 : 'auto',
-                  }}
-                >
-                    {React.cloneElement(<SettingsIcon />, { sx: { fontSize: open ? '30px' : '25px' } })}
-                </ListItemIcon>
-                <ListItemText
-                  primary={'Settings'}
-                  primaryTypographyProps={{
-                    fontWeight: '600',
-                    fontSize: '15px',
-                  }}
-                  sx={{
-                    opacity: open ? 1 : 0,
-                    
-                    transition: 'opacity 0.3s ease-out', // Ensure the text transitions as well
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-        
+                {settingsOption.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={settingsOption.title}
+                primaryTypographyProps={{
+                  fontWeight: '600',
+                  fontSize: '15px',
+                }}
+                sx={{
+                  opacity: open ? 1 : 0,
+                  display: open ? 'block' : 'none', 
+                  transition: 'opacity 0.3s ease-out', // Ensure the text transitions as well
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
         </List>
       </MuiDrawer>
     </>
