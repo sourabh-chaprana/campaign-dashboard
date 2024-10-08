@@ -5,22 +5,22 @@ import {
   CardContent,
   Avatar,
   Typography,
-  Chip,
 } from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
 import AvatarGroup from "@mui/material/AvatarGroup";
+import { SvgImageComponent } from "./svgImageComponent";
 
-function AvatarCard() {
+
+function AvatarCard({ data }) {
   return (
     <Card
-    elevation={0} 
-    sx={{
-      border: "1px solid rgba(0, 0, 0, 0.2)", // Add border
-      borderRadius: "8px", // Optional: Customize border radius
-    }}
-  >
+      elevation={0}
+      sx={{
+        border: "1px solid rgba(0, 0, 0, 0.2)", // Add border
+        borderRadius: "8px", // Optional: Customize border radius
+      }}
+    >
       <CardHeader
-        avatar={<FacebookIcon />}
+        avatar={<SvgImageComponent icon={data.socialIcon} />}
         title={
           <AvatarGroup total={5}>
             <Avatar
@@ -40,15 +40,26 @@ function AvatarCard() {
           </AvatarGroup>
         }
       />
-      <CardContent>
-        <Typography variant="h6" fontWeight={'bold'} textAlign={'left'}>
-          Strategic Email Newsletter Campaign for Subscriber Engagement
+      <CardContent sx={{ paddingBottom: '16px !important' }}>
+        <Typography
+          fontWeight={'bold'}
+          textAlign={'left'}
+          sx={{
+            display: '-webkit-box',
+            fontSize: '18px',
+            lineHeight: '1.3',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}>
+          {data.title}
         </Typography>
-        <Typography variant="body2" color="textSecondary" sx={{ paddingY: '12px',  borderBottom: '1px solid rgba(0, 0, 0, 0.2)', textAlign: 'left', fontSize: '12px' }}>
-          Start: Not Started
+        <Typography variant="body2" color="textSecondary" sx={{ paddingY: '12px', borderBottom: '1px solid rgba(0, 0, 0, 0.2)', textAlign: 'left', fontSize: '12px' }}>
+          Start: {data.status}
         </Typography>
         <Typography variant="body2" color="textSecondary" sx={{ paddingY: '12px', textAlign: 'left', fontSize: '16px' }}>
-          Last update date: Mar 27, 2024 6:23 am
+          Last update date: {data.lastUpdatedData}
         </Typography>
       </CardContent>
     </Card>

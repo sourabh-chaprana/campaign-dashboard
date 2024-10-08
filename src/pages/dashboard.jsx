@@ -26,29 +26,57 @@ import ChooseVendor from "../components/table";
 import CampaignTable from "../components/table";
 
 
+const cardData = [
+  {
+    socialIcon: 'facebook',
+    title: 'Strategic Email Newsletter Campaign for Subscriber Engagement',
+    status: 'Not Started',
+    lastUpdatedData: 'March 24, 6:23pm',
+  },
+  {
+    socialIcon: 'instagram',
+    title: 'Maximinzing Reach with targeted instagram sponsored Posts',
+    status: 'Apr 1, 2024 12:02 pm',
+    lastUpdatedData: 'March 24, 6:23pm',
+  },
+  {
+    socialIcon: 'linkedin',
+    title: 'Optimizing PPC Campaigns Through Strategic Keyword Biddings',
+    status: 'Apr 1, 2024 12:02 pm',
+    lastUpdatedData: 'March 24, 6:23pm',
+  },
+  {
+    socialIcon: 'linkedin',
+    title: 'Optimizing PPC Campaigns Through Strategic Keyword Biddings',
+    status: 'Apr 1, 2024 12:02 pm',
+    lastUpdatedData: 'March 24, 6:23pm',
+  },
+]
+
 const DashboardCard = () => {
   const theme = useTheme();
 
   return (
     <>
-   
-     
-<Card  sx={{ p: 3, mt: 5 }} elevation={3}>
-      <Grid container spacing={2} >
-        <Grid item xs={12} sm={4}>
-          <AvatarCard />
+
+
+      <Card sx={{ p: 3, mt: 5 }} elevation={3}>
+        <Grid container spacing={2} >
+          {
+            cardData?.map(( data, index) => {
+
+              return (
+                <Grid item xs={12} sm={3}>
+                  <AvatarCard data={data} />
+                </Grid>
+              )
+            })
+          }
         </Grid>
-        <Grid item xs={12} sm={4}>
-          <AvatarCard />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <AvatarCard />
-        </Grid>
-      </Grid>
       </Card>
 
-      <CampaignTable/>
-      
+      <CampaignTable />
+
     </>
   );
 };
