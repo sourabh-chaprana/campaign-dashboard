@@ -24,8 +24,9 @@ const teamsSlice = createSlice({
             state.loading = true;
           })
           .addCase(fetchTeamsDetailsSlice.fulfilled, (state, action) => {
-            state.campaigns = action.payload.items;
-            state.totalItems = action.payload.totalItems;
+           
+            state.campaigns = action.payload.content;
+            state.totalItems = action.payload.totalElements;
             state.loading = false;
           })
           .addCase(fetchTeamsDetailsSlice.rejected, (state, action) => {
