@@ -149,9 +149,8 @@ export default function CampaignTable() {
         }}
       />
     </TableCell>
-    {/* <TableCell sx={{ fontWeight: 'bold' }}>Order</TableCell> */}
+ 
     <TableCell sx={{ fontWeight: 'bold' }}>Client</TableCell>
-    {/* <TableCell sx={{ fontWeight: 'bold' }}>Date</TableCell> */}
     <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
     <TableCell sx={{ fontWeight: 'bold' }}>Country</TableCell>
     <TableCell sx={{ fontWeight: 'bold' }}>Total</TableCell>
@@ -185,22 +184,16 @@ export default function CampaignTable() {
                           }}
                         />
                       </TableCell>
-                      {/* <TableCell component="th" id={labelId} scope="row">
-                        {campaign.id}
-                      </TableCell> */}
+                
                       <TableCell>
                         <Typography>{campaign.client}</Typography>
                         <Typography variant="body2" color="textSecondary">
                           {campaign.email}
                         </Typography>
                       </TableCell>
-                      {/* <TableCell>{campaign.date}</TableCell> */}
+                    
                       <TableCell>
-                        {/* <Chip
-                          label={campaign.status}
-                          color={statusColors[campaign.status]}
-                          variant="outlined"
-                        /> */}
+                       
 
                     <Chip
                       className={css`

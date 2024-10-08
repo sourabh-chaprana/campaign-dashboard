@@ -23,6 +23,7 @@ import AvatarCard from "../components/AvatarCard";
 import { styled, useTheme } from '@mui/material/styles';
 import OrderTable from "../components/table";
 import ChooseVendor from "../components/table";
+import CampaignTable from "../components/table";
 
 
 const DashboardCard = () => {
@@ -46,7 +47,7 @@ const DashboardCard = () => {
       </Grid>
       </Card>
 
-      <ChooseVendor/>
+      <CampaignTable/>
       
     </>
   );
