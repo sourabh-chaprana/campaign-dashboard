@@ -21,10 +21,9 @@ import MovingIcon from '@mui/icons-material/Moving';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import { Avatar, Chip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const drawerWidth = 300;
-
-
 
 const options = [
   {
@@ -61,183 +60,133 @@ const options = [
   },
 ];
 
-
-
-
 export default function LeftSidebar({ open, toggleDrawer }) {
   const theme = useTheme();
-  useEffect(()=>{
 
-  },[open])
-
-  
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-    
-  }),
-  overflowX: 'hidden',
-  backgroundColor:`${!open ? '#00ADEB':'white'}`,
-
-});
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    variants: [
-      {
-        props: ({ open }) => open,
-        style: {
-          ...openedMixin(theme),
-          
-          '& .MuiDrawer-paper': openedMixin(theme),
-        },
-      },
-      {
-        props: ({ open }) => !open,
-        style: {
-          ...closedMixin(theme),
-          '& .MuiDrawer-paper': closedMixin(theme),
-        },
-      },
-    ],
-  }),
-);
-
+  const drawerSx = {
+    width: open ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
+    transition: "width 0.3s ease-out",
+    overflowX: 'hidden',
+    '& .MuiDrawer-paper': {
+       overflow: 'hidden',
+      width: open ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
+      transition: "width 0.3s ease-out",
+      backgroundColor: open ? 'white' : '#00ADEB', // For example, customize background color based on `open`
+    },
+   
+  };
 
   return (
     <>
-
-      {/* <Drawer variant="permanent" open={open}> */}
-      <Drawer
+      <MuiDrawer
         variant="permanent"
         anchor="left"
         open={open}
-
-
+        sx={drawerSx} // Applying the transition and styles directly with `sx`
       >
-        <DrawerHeader>
-          <IconButton
-            onClick={toggleDrawer}
-            sx={{
-              position: "absolute",
-              right: "20px",
-              top: "10px",
-              zIndex: 1300,
-              bgcolor: "#fff",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              "&:hover": { bgcolor: "#f0f0f0" },
-            }}
-          >
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </DrawerHeader>
-
+        
+        <br />
         {/* User Profile Section */}
-
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingY: 2 }}>
           <Avatar
             alt="Olivia Rhye"
             src="https://i.pravatar.cc/300"
-            sx={{ width: open ? 70 : 40, height: open ? 70 : 40 }}
+            sx={{ width: open ? 95 : 45, height: open ? 95 : 45, cursor:'pointer' }}
+            onClick={toggleDrawer}
           />
           {open && (
             <>
-              <Typography sx={{ fontSize: '22px', fontWeight: 'bold' }}>Olivia Rhye</Typography>
-              <Typography sx={{ fontSize: '18px', fontWeight: '600', color: '#00ADEB' }}>
+              <Typography sx={{ fontSize: '22px', fontWeight: '600' }}>Olivia Rhye</Typography>
+              <Typography sx={{ fontSize: '17px', fontWeight: '500', color: '#00ADEB' }}>
                 Marketing Manager
               </Typography>
-              <Chip icon={<EditIcon />} label="Edit Profile" color="primary" size="small" sx={{padding:'10px', marginTop:'4px'}} />
+              <Chip
+                icon={<EditIcon />}
+                label="Edit Profile"
+                color="primary"
+                size="small"
+                sx={{ padding: '8px', marginTop: '4px' }}
+              />
             </>
           )}
         </Box>
 
-
         <List sx={{ marginTop: '20PX' }}>
-          {options?.map((item, index) => (
-            <ListItem key={item} disablePadding sx={{ display: 'block' }}>
+          {options.map((item, index) => (
+            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
-                sx={[
-                  {
-                    minHeight: 48,
-                    px: 2.5,
-                  },
-                  open
-                    ? {
-                      justifyContent: 'initial',
-                    }
-                    : {
-                      justifyContent: 'center',
-                    },
-                ]}
+                sx={{
+                  height: open? 48 : 50,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2,
+                }}
               >
                 <ListItemIcon
-                  sx={[
-                    {
-                      minWidth: 0,
-                      justifyContent: 'center',
-                      color: '#00ADEB'
-                    },
-                    open
-                      ? {
-                        mr: 3,
-                      }
-                      : {
-                        mr: 'auto',
-                      },
-                  ]}
+                  sx={{
+                    minWidth: 0,
+                    justifyContent: 'center',
+                    color: open?'#00ADEB':'white',
+                  
+                    mr: open ? 2 : 'auto',
+                  }}
                 >
-                  {item?.icon}
+                    {React.cloneElement(item.icon, { sx: { fontSize: open ? '30px' : '25px' } })}
                 </ListItemIcon>
                 <ListItemText
-                  primary={item?.title}
-                  sx={[
-                    {
-                      fontWeight: 'bold',
-                      fontSize: '24px'
-                    },
-                    open
-                      ? {
-                        opacity: 1,
-                      }
-                      : {
-                        opacity: 0,
-                      },
-                  ]}
+                  primary={item.title}
+                  primaryTypographyProps={{
+                    fontWeight: '600',
+                    fontSize: '15px',
+                  }}
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    
+                    transition: 'opacity 0.3s ease-out', // Ensure the text transitions as well
+                  }}
                 />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
-      </Drawer>
 
+        <List sx={{ position:'absolute',bottom:'12px',left:'4px' }}>
+      
+            <ListItem  disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                sx={{
+                  height: open? 48 : 50,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    justifyContent: 'center',
+                    color: open?'#00ADEB':'white',
+                  
+                    mr: open ? 2 : 'auto',
+                  }}
+                >
+                    {React.cloneElement(<SettingsIcon />, { sx: { fontSize: open ? '30px' : '25px' } })}
+                </ListItemIcon>
+                <ListItemText
+                  primary={'Settings'}
+                  primaryTypographyProps={{
+                    fontWeight: '600',
+                    fontSize: '15px',
+                  }}
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    
+                    transition: 'opacity 0.3s ease-out', // Ensure the text transitions as well
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+        
+        </List>
+      </MuiDrawer>
     </>
   );
 }

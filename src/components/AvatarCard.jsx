@@ -12,7 +12,13 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 
 function AvatarCard() {
   return (
-    <Card>
+    <Card
+    elevation={0} 
+    sx={{
+      border: "1px solid rgba(0, 0, 0, 0.2)", // Add border
+      borderRadius: "8px", // Optional: Customize border radius
+    }}
+  >
       <CardHeader
         avatar={<FacebookIcon />}
         title={

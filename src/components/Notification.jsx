@@ -111,18 +111,7 @@ export default function Notification() {
         </ListItemButton>
         {/* <Divider /> */}
 
-        {/* Fifth Notification */}
-        {/* <ListItemButton>
-          <ListItemAvatar>
-            <Avatar sx={{ color: 'info.main', bgcolor: 'transparent' }}>
-              <GiftOutlined />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary={<Typography variant="subtitle1">Our platform will undergo...</Typography>}
-            secondary="Mar 11, 2024 5:01 pm"
-          />
-        </ListItemButton> */}
+    
         <Divider />
 
         {/* View All Button */}

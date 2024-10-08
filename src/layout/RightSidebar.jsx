@@ -73,16 +73,19 @@ const RightSidebar = ({ open, toggleDrawer }) => {
         <Divider />   
       <Box sx={{ padding: 2 }}>
  
-        <Typography variant="h6">Notification Center</Typography>
-        <List>
-          <Notification />
-          {/* More notifications */}
-        </List>
-        <Divider sx={{ marginY: 2 }} />
+       
         <Typography variant="h6">Team Members</Typography>
         <List>
           {/* More team members */}
           <TeamMembersList />
+        </List>
+        <Divider sx={{ marginY: 2 }} />
+         
+
+        <Typography variant="h6">Notification Center</Typography>
+         <List>
+          <Notification />
+          {/* More notifications */}
         </List>
       </Box>
     </Drawer>
