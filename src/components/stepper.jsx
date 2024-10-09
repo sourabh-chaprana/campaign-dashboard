@@ -53,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
     },
 
     '& .MuiStepConnector-root': {
-      left: 'calc(-50 % + 23px)',
-      right: 'calc(50 % + 23px)'
+      left: 'calc(-50% + 24px)',  
+      right: 'calc(50% + 24px)'   
     }
   }
 }));
