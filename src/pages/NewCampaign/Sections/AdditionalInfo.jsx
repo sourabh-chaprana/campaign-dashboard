@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import React from 'react'
 
 const AdditionalInfo = ({ handleChange, formValues, classes, prevStep }) => {
@@ -19,21 +19,27 @@ const AdditionalInfo = ({ handleChange, formValues, classes, prevStep }) => {
             </Box>
 
             {/* Campaign details summary */}
-            <Box mt={2}>
-                <Typography variant="h6">Campaign Title: Diwali Campaign</Typography>
-                <Typography variant="h6">Description: Testing</Typography>
-                <Typography variant="h6">Location: Katni, Madhya Pradesh</Typography>
-                <Typography variant="h6">Device: Android</Typography>
-                <Typography variant="h6">Age Group: 24</Typography>
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 4 }}>
+                <Box sx={{ width: '48%', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
+                    <Typography py={1} className={classes.additionInfo}>Campaign Title:</Typography>
+                    <Typography py={1} className={classes.additionInfo}>Demographic Location:</Typography>
+                    <Typography py={1} className={classes.additionInfo}>Device:</Typography>
+                </Box>
+                <Box sx={{ width: '48%' }}>
+                    <Typography py={1} className={classes.additionInfoValue}>Diwali Celebration</Typography>
+                    <Typography py={1} className={classes.additionInfoValue}>Katni, Madhya Pradesh</Typography>
+                    <Typography py={1} className={classes.additionInfoValue}>Android</Typography>
+                </Box>
             </Box>
 
             {/* Buttons */}
-            <Box mt={4} display="flex" justifyContent="space-between">
-                <Button variant="contained" onClick={prevStep}>
-                    Edit
+            <Box mt={4} display="flex" justifyContent="space-between" gap={2}>
+                <Button variant="outlined" onClick={prevStep} sx={{ width: '100%', padding: 1, border: '1px solid #00ADEB', color: '#00ADEB', fontSize: '18px', fontWeight: 500 }}>
+                    Save For Draft
                 </Button>
-                <Button variant="contained" color="primary">
-                    Send for Approval
+                <Button variant="contained" type="submit" sx={{ width: '100%', padding: 1, color: '#fff', fontSize: '18px', fontWeight: 500, backgroundColor: '#00ADEB' }}>
+                    Send For Approval
                 </Button>
             </Box>
         </Box>

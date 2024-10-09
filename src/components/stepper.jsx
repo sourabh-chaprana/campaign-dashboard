@@ -53,10 +53,23 @@ const useStyles = makeStyles((theme) => ({
     },
 
     '& .MuiStepConnector-root': {
-      left: 'calc(-50% + 24px)',  
-      right: 'calc(50% + 24px)'   
+      left: 'calc(-50% + 24px)',
+      right: 'calc(50% + 24px)'
     }
-  }
+  },
+
+  additionInfo: {
+    color: '#524f4f',
+    fontWeight: 500,
+    fontSize: '18px !important',
+    margin:'auto'
+  },
+
+  additionInfoValue: {
+    color: '#00ADEB',
+    fontWeight: 500,
+    fontSize: '18px !important',
+  },
 }));
 
 

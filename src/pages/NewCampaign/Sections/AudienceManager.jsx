@@ -27,23 +27,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                         Country
                     </Typography>
 
-                    <TextField
-                        variant="outlined"
-                        name="location"
-                        value={formValues.location}
-                        onChange={handleChange}
-                        className={classes.textField}
-
-                        slotProps={{
-                            input: {
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <LocationOnIcon />
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
-                    />
+                    
                 </Grid>
 
                 <Grid item xs={12}>
