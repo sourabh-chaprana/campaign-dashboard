@@ -8,12 +8,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
         <form>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography sx={{
-                        color: '#BEBEBE',
-                        fontWeight: 500,
-                        marginBottom: '2px',
-                        fontSize: '20px',
-                    }}>
+                    <Typography className={classes.label}>
                         Country
                     </Typography>
 
@@ -37,12 +32,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Typography sx={{
-                        color: '#BEBEBE',
-                        fontWeight: 500,
-                        marginBottom: '2px',
-                        fontSize: '20px',
-                    }}>
+                    <Typography className={classes.label}>
                         State
                     </Typography>
 
@@ -66,23 +56,22 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Accordion defaultExpanded>
+                    <Typography className={classes.label}>
+                        Parameters
+                    </Typography>
+
+                    <Accordion>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1-content"
                             id="panel1-header"
                         >
-                            <Typography>Additional Information</Typography>
+                            <Typography>Click To Add Parameters</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
-                                    <Typography sx={{
-                                        color: '#BEBEBE',
-                                        fontWeight: 500,
-                                        marginBottom: '2px',
-                                        fontSize: '20px',
-                                    }}>
+                                    <Typography className={classes.label}>
                                         Device
                                     </Typography>
 
@@ -98,12 +87,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                                     </FormControl>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Typography sx={{
-                                        color: '#BEBEBE',
-                                        fontWeight: 500,
-                                        marginBottom: '2px',
-                                        fontSize: '20px',
-                                    }}>
+                                    <Typography className={classes.label}>
                                         Age
                                     </Typography>
 

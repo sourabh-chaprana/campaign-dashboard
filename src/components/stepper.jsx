@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Button, TextField, Select, MenuItem, InputLabel, FormControl, Card, Typography, Grid, Grid2 } from '@mui/material';
+import { Stepper, Step, StepLabel, Button, TextField, Select, MenuItem, InputLabel, FormControl, Card, Typography, Grid, Grid2, Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import NewCampaign from '../pages/NewCampaign/Sections/NewCampaign';
 import AudienceManager from '../pages/NewCampaign/Sections/AudienceManager';
@@ -31,7 +31,35 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: '10px',
     },
   },
+
+  label: {
+    color: '#BEBEBE',
+    fontWeight: 500,
+    marginBottom: '2px',
+    fontSize: '18px !important',
+  },
+
+  stepperLine: {
+    '& .MuiStepConnector-line': {
+
+    },
+    '& .MuiStepIcon-root': {
+      width: '2em',
+      height: '2em',
+    },
+
+    '& .MuiStepConnector-alternativeLabel': {
+      top: '23px'
+    },
+
+    '& .MuiStepConnector-root': {
+      left: 'calc(-50% + 24px)',  
+      right: 'calc(50% + 24px)'   
+    }
+  }
 }));
+
+
 
 function CreateCampaign() {
   const classes = useStyles();
@@ -80,7 +108,7 @@ function CreateCampaign() {
 
   return (
     <div>
-      <Stepper activeStep={activeStep} sx={{ marginY: 4 }}>
+      <Stepper activeStep={activeStep} sx={{ marginY: 4 }} alternativeLabel className={classes.stepperLine}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
@@ -93,7 +121,7 @@ function CreateCampaign() {
             <p>All steps completed</p>
           </div>
         ) : (
-          <Card sx={{ padding: 4 }}>
+          <Card sx={{ padding: 10 }}>
             {renderStepContent(activeStep)}
           </Card>
         )}
