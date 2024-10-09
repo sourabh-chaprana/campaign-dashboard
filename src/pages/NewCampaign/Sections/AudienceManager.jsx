@@ -123,6 +123,14 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                         </AccordionDetails>
                     </Accordion>
                 </Grid>
+
+                <Grid item xs={12}>
+                    <Box display="flex" justifyContent="flex-end">
+                        <Button variant="contained" sx={{ width: 'auto', border: '1px solid #00ADEB', color: '#fff', backgroundColor: '#00ADEB', fontSize: '18px', fontWeight: 500 }}>
+                            Generate Audience
+                        </Button>
+                    </Box>
+                </Grid>
             </Grid>
 
             <Box mt={4} display="flex" justifyContent="space-between" gap={2}>
