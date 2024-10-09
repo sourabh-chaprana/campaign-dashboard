@@ -6,7 +6,7 @@ const AdditionalInfo = ({ handleChange, formValues, classes, prevStep }) => {
         <Box>
             <Typography variant="h5">Campaign Summary</Typography>
 
-            <Box mt={2} sx={{border:'1px solid black'}}>
+            <Box mt={2}>
                 <TextField
                     variant="outlined"
                     name="additionalInfo"

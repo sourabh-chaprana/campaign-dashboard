@@ -267,6 +267,7 @@ import {
   CircularProgress
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const CampaignTable = ({
   campaigns,
@@ -279,7 +280,7 @@ const CampaignTable = ({
 }) => {
   // Define the state for selected rows
   const [selected, setSelected] = useState([]);
-
+  const navigate = useNavigate();
   // Function to check if a row is selected
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
@@ -318,7 +319,7 @@ const CampaignTable = ({
     <Card elevation={3} sx={{ p: 3, mt: 5 }}>
       <Box display="flex" justifyContent="space-between" my={4}>
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>Campaign Status</Typography>
-        <Button variant="contained" color="primary" sx={{ ml: 2 }}>
+        <Button variant="contained" color="primary" sx={{ ml: 2 }} onClick={() => { navigate('/create-campaign') }}>
           Create Campaign
         </Button>
       </Box>
