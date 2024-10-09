@@ -68,8 +68,6 @@ const DashboardCard = () => {
     setPage(0);
   };
 
-  console.log('teamsDetails---------------123',campaigns)
-
   return (
     <>
 
@@ -94,7 +92,7 @@ const DashboardCard = () => {
         </Grid>
       </Card>
 
-        <CampaignTable
+      <CampaignTable
         campaigns={campaigns}
         totalItems={totalItems}
         page={page}
