@@ -83,7 +83,7 @@ const RightSidebar = ({ open, toggleDrawer }) => {
         </Card>
         <Divider sx={{ marginY: 2 }} />
 
-        <Card sx={{ padding: 1 }}>
+        <Card sx={{ paddingY: '32px !important', paddingX: '16px !important' }}>
           <Typography variant="h6">Team Members</Typography>
           <List>
             {/* More team members */}

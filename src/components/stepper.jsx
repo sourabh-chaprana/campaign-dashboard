@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Button, TextField, Select, MenuItem, InputLabel, FormControl ,Card} from '@mui/material';
+import { Stepper, Step, StepLabel, Button, TextField, Select, MenuItem, InputLabel, FormControl, Card, Typography, Grid, Grid2 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import NewCampaign from '../pages/NewCampaign/Sections/NewCampaign';
+import AudienceManager from '../pages/NewCampaign/Sections/AudienceManager';
+import AdditionalInfo from '../pages/NewCampaign/Sections/AdditionalInfo';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -16,9 +19,17 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     width: '100%',
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: '#e6e6e6',
+      borderRadius: '10px',
+    },
   },
   selectField: {
     width: '100%',
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: '#e6e6e6',
+      borderRadius: '10px',
+    },
   },
 }));
 
@@ -52,95 +63,15 @@ function CreateCampaign() {
     switch (step) {
       case 0:
         return (
-            
-          <div className={classes.formContainer}>
-            <TextField
-              label="Campaign Title"
-              variant="outlined"
-              name="title"
-              value={formValues.title}
-              onChange={handleChange}
-              className={classes.textField}
-            />
-            <TextField
-              label="Media"
-              variant="outlined"
-              name="media"
-              className={classes.textField}
-              type="file"
-              onChange={handleChange}
-            />
-            <TextField
-              label="Date"
-              type="date"
-              variant="outlined"
-              name="date"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              onChange={handleChange}
-            />
-          </div>
+          <NewCampaign handleChange={handleChange} formValues={formValues} classes={classes} handleNext={handleNext} />
         );
       case 1:
         return (
-          <div className={classes.formContainer}>
-            <TextField
-              label="Country"
-              variant="outlined"
-              name="location"
-              value={formValues.location}
-              onChange={handleChange}
-              className={classes.textField}
-            />
-            <TextField
-              label="State"
-              variant="outlined"
-              name="state"
-              value={formValues.state}
-              onChange={handleChange}
-              className={classes.textField}
-            />
-            <FormControl className={classes.selectField}>
-              <InputLabel>Device</InputLabel>
-              <Select
-                value={formValues.device}
-                name="device"
-                onChange={handleChange}
-              >
-                <MenuItem value="iPhone">iPhone</MenuItem>
-                <MenuItem value="Android">Android</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl className={classes.selectField}>
-              <InputLabel>Age Group</InputLabel>
-              <Select
-                value={formValues.ageGroup}
-                name="ageGroup"
-                onChange={handleChange}
-              >
-                <MenuItem value="18-24">18-24</MenuItem>
-                <MenuItem value="25-34">25-34</MenuItem>
-                <MenuItem value="35-44">35-44</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
+          <AudienceManager handleChange={handleChange} formValues={formValues} classes={classes} prevStep={handleBack} handleNext={handleNext} />
         );
       case 2:
         return (
-          <div className={classes.formContainer}>
-            <TextField
-              label="Additional Information"
-              variant="outlined"
-              name="additionalInfo"
-              value={formValues.additionalInfo}
-              onChange={handleChange}
-              className={classes.textField}
-              multiline
-              rows={4}
-            />
-          </div>
+          <AdditionalInfo handleChange={handleChange} formValues={formValues} classes={classes} handleNext={handleNext} prevStep={handleBack} />
         );
       default:
         return 'Unknown step';
@@ -149,7 +80,7 @@ function CreateCampaign() {
 
   return (
     <div>
-      <Stepper activeStep={activeStep}>
+      <Stepper activeStep={activeStep} sx={{ marginY: 4 }}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
@@ -162,16 +93,8 @@ function CreateCampaign() {
             <p>All steps completed</p>
           </div>
         ) : (
-          <Card>
+          <Card sx={{ padding: 4 }}>
             {renderStepContent(activeStep)}
-            <div className={classes.buttonContainer}>
-              <Button disabled={activeStep === 0} onClick={handleBack}>
-                Back
-              </Button>
-              <Button variant="contained" color="primary" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? 'Send For Approval' : 'Next'}
-              </Button>
-            </div>
           </Card>
         )}
       </div>
@@ -180,3 +103,4 @@ function CreateCampaign() {
 }
 
 export default CreateCampaign;
+
