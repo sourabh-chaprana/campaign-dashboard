@@ -7,6 +7,8 @@ import {
 import LeftSidebar from "./layout/LeftSidebar";
 import RightSidebar from "./layout/RightSidebar";
 import DashboardCard from "./pages/dashboard";
+// import Outlate from "react-router-dom"
+import { Outlet } from "react-router-dom";
 
 
 
@@ -40,7 +42,8 @@ const MainLayout = () => {
           overflowX: "hidden", 
         }}
       >
-        <DashboardCard />
+        {/* <DashboardCard /> */}
+        <Outlet />
       </Box>
 
       {/* Right Sidebar */}
