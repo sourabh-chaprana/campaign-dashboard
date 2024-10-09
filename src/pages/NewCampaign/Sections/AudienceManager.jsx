@@ -7,6 +7,21 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
     return (
         <form>
             <Grid container spacing={2}>
+
+                <Grid item xs={12}>
+                    <Typography sx={{ fontWeight: 'bold', fontSize: '28px' }}>Audience Manager</Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '26px', color: '#525252' }}>Demographic Reach</Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '20px', textAlign: 'end', fontStyle: 'italic', color: '#00ADEB' }}>Audience Count- 50,00,000</Typography>
+                </Grid>
+
+
+
                 <Grid item xs={12}>
                     <Typography className={classes.label}>
                         Country
@@ -65,6 +80,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1-content"
                             id="panel1-header"
+                            sx={{ paddingY: '4px' }}
                         >
                             <Typography>Click To Add Parameters</Typography>
                         </AccordionSummary>
@@ -108,11 +124,12 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                     </Accordion>
                 </Grid>
             </Grid>
-            <Box mt={2} display="flex" justifyContent="space-between">
-                <Button variant="contained" onClick={prevStep}>
+
+            <Box mt={4} display="flex" justifyContent="space-between" gap={2}>
+                <Button variant="outlined" onClick={prevStep} sx={{ width: '100%', padding: 1, border: '1px solid #00ADEB', color: '#00ADEB', fontSize: '18px', fontWeight: 500 }}>
                     Discard
                 </Button>
-                <Button variant="contained" color="primary" type="submit" onClick={handleNext}>
+                <Button variant="contained" type="submit" onClick={handleNext} sx={{ width: '100%', padding: 1, color: '#fff', fontSize: '18px', fontWeight: 500, backgroundColor: '#00ADEB' }}>
                     Next
                 </Button>
             </Box>
