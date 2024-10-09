@@ -7,6 +7,11 @@ import MainLayout from "./MainLayout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import './Global.css'
+import DashboardCard from "./pages/dashboard";
+import NewCampaign from "./pages/NewCampaign/Sections/NewCampaign";
+import CreateCampaign from "./components/stepper";
+import AnalyticsPage from "./pages/analytics";
+import CampaignList from "./pages/campaignList";
 
 const App = () => {
   return (
@@ -15,8 +20,14 @@ const App = () => {
         <ToastContainer />
         <Routes> {/* Updated usage */}
           <Route path="/login" element={<Login />} /> 
-          <Route path="/dashboard" element={<MainLayout />} />
           <Route path="/" element={<Login />} /> 
+
+          <Route element={<MainLayout />}>
+          <Route path="/dashboard" element={<DashboardCard />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/campaign-list" element={<CampaignList />} />
+          <Route path="/create-campaign" element={<CreateCampaign />} />
+          </Route>
         </Routes>
       </Router>
     </Provider>

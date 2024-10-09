@@ -22,6 +22,7 @@ import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import { Avatar, Chip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 300;
 
@@ -29,19 +30,28 @@ const options = [
   {
     title: 'Dashboard',
     icon: <DashboardIcon />,
+    path:'/dashboard'
+  },
+
+  {
+    title: 'List Of Campaign',
+    icon: <ContentPasteIcon />,
+    path:'campaign-list'
   },
   {
     title: 'Analytics',
     icon: <AnalyticsIcon />,
+    path:'/analytics'
   },
   {
     title: 'Audience Manager',
     icon: <GroupIcon />,
   },
-  {
-    title: 'Budget Allocation',
-    icon: <ContentPasteIcon />,
-  },
+  // {
+  //   title: 'List Of Campaign',
+  //   icon: <ContentPasteIcon />,
+  //   path:'campaign-list'
+  // },
   {
     title: 'Content Library',
     icon: <DateRangeIcon />,
@@ -121,6 +131,8 @@ export default function LeftSidebar({ open, toggleDrawer }) {
             {options.map((item, index) => (
               <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
+                   component={Link} 
+                   to={item.path}
                   sx={{
                     height: open ? 48 : 50,
                     justifyContent: open ? 'initial' : 'center',
