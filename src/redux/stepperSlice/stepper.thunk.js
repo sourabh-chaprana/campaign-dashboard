@@ -50,3 +50,17 @@ export const fetchSecondaryOptionsThunk = async (attributeCode) => {
     }
 
 }
+
+
+
+export const fetchDiscoverIdThunk = async (data) => {
+    try {
+        const response = await axios.post(`http://13.232.49.252:7010/api/dxe/discovery/discover`,data);
+        const data = await response.json();
+        return data
+    } catch (error) {
+      
+        throw error; 
+    }
+
+}

@@ -8,14 +8,23 @@ import {
     Autocomplete,
     Card,
     CardContent,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    FormControl,
+    Select,
+    MenuItem,
 } from '@mui/material';
 import {
     fetchPrimarySelectSlice,
     fetchPrimaryOptionsSlice,
     fetchSecondarySelectSlice,
     fetchSecondaryOptionsSlice,
+    fetchDiscoverIdSlice
 } from '../../../redux/stepperSlice/stepper.slice';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useDispatch, useSelector } from 'react-redux';
+
 
 const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNext }) => {
     const dispatch = useDispatch();
@@ -23,7 +32,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
     const [attributes, setAttributes] = useState([]);
     const [primaryOptions, setPrimaryOptions] = useState({});
     const [secondaryOptions, setSecondaryOptions] = useState({});
-    const [secondaryAttributes, setSecondaryAttributes] = useState([]); // Initialize as an array
+    const [secondaryAttributes, setSecondaryAttributes] = useState([]);
     const [loadingPrimary, setLoadingPrimary] = useState(false);
     const [loadingSecondary, setLoadingSecondary] = useState(false);
 
@@ -56,14 +65,15 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
     useEffect(() => {
         if (audienceData?.primary) {
             setAttributes(audienceData.primary);
+            console.log('fsfsfsf',audienceData)
         }
         if (audienceData?.secondary) {
-            setSecondaryAttributes(audienceData.secondary || []); // Ensure it's always an array
+            setSecondaryAttributes(audienceData.secondary || []);
         }
     }, [audienceData]);
 
     const fetchPrimaryOptions = async (attributeCode) => {
-        if (primaryOptions[attributeCode]) return; // Avoid fetching again if options already loaded
+        if (primaryOptions[attributeCode]) return;
         try {
             await dispatch(fetchPrimaryOptionsSlice(attributeCode)).unwrap();
             const fetchedOptions = audienceData.primaryOption[attributeCode];
@@ -74,7 +84,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
     };
 
     const fetchSecondaryOptions = async (attributeCode) => {
-        if (secondaryOptions[attributeCode]) return; // Avoid fetching again if options already loaded
+        if (secondaryOptions[attributeCode]) return;
         try {
             await dispatch(fetchSecondaryOptionsSlice(attributeCode)).unwrap();
             const fetchedOptions = audienceData.secondaryOptions[attributeCode];
@@ -84,27 +94,35 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
         }
     };
 
-    const handleAutocompleteChange = useCallback((attributeCode) => (event, newValue) => {
+    // const handleAutocompleteChange = useCallback((attributeCode) => (event, newValue) => {
+    //     handleChange({
+    //         target: {
+    //             name: attributeCode,
+    //             value: newValue,
+    //         },
+    //     });
+    // }, [handleChange]);
+    const handleAutocompleteChange = useCallback((attributeCode, type) => (event, newValue) => {
+        // if(type === 'PRIMARY'){
+        //     dispatch(fetchDiscoverIdSlice())
+        // }
         handleChange({
             target: {
-                name: attributeCode,
-                value: newValue,
-            }
+                name: attributeCode, 
+                value: newValue,     
+                       
+            },
         });
     }, [handleChange]);
-
     return (
         <form>
             <Grid container spacing={2}>
-         
                 <Grid item xs={12}>
                     <Typography sx={{ fontWeight: 'bold', fontSize: '28px' }}>Audience Manager</Typography>
                 </Grid>
-
                 <Grid item xs={6}>
                     <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '20px', color: '#525252' }}>Demographic Reach</Typography>
                 </Grid>
-
                 <Grid item xs={6}>
                     <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '18px', textAlign: 'end', fontStyle: 'italic', color: '#00ADEB' }}>Audience Count- 50,00,000</Typography>
                 </Grid> 
@@ -125,7 +143,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                                             options={primaryOptions[attribute.attributeCode] || []}
                                             getOptionLabel={(option) => option.name || option}
                                             value={formValues[attribute.attributeCode] || []}
-                                            onChange={handleAutocompleteChange(attribute.attributeCode)}
+                                            onChange={handleAutocompleteChange(attribute.attributeCode,attribute.type)}
                                             onOpen={() => fetchPrimaryOptions(attribute.attributeCode)}
                                             renderInput={(params) => (
                                                 <TextField
@@ -158,7 +176,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                                             options={secondaryOptions[attribute.attributeCode] || []}
                                             getOptionLabel={(option) => option.name || option}
                                             value={formValues[attribute.attributeCode] || []}
-                                            onChange={handleAutocompleteChange(attribute.attributeCode)}
+                                            onChange={handleAutocompleteChange(attribute.attributeCode,attribute.type)}
                                             onOpen={() => fetchSecondaryOptions(attribute.attributeCode)}
                                             renderInput={(params) => (
                                                 <TextField
@@ -175,10 +193,57 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                     </Card>
                 </Grid>
 
+                {/* Generate Parameters Button */}
+                <Grid item xs={12}>
+                    {/* <Typography className={classes.label}></Typography> */}
+                    <Typography sx={{ fontWeight: 'bold', fontSize: '20px',marginY:2 }}> Additional Parameters</Typography>
+
+                    <Accordion sx={{ boxShadow: 'none', border: '1px solid #3333' }}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1-content"
+                            id="panel1-header"
+                        >
+                            <Typography>Click To Add Parameters</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <Typography className={classes.label}>Device</Typography>
+                                    <FormControl className={classes.selectField}>
+                                        <Select
+                                            value={formValues.device}
+                                            name="device"
+                                            onChange={handleChange}
+                                        >
+                                            <MenuItem value="iPhone">iPhone</MenuItem>
+                                            <MenuItem value="Android">Android</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography className={classes.label}>Age</Typography>
+                                    <FormControl className={classes.selectField}>
+                                        <Select
+                                            value={formValues.ageGroup}
+                                            name="ageGroup"
+                                            onChange={handleChange}
+                                        >
+                                            <MenuItem value="18-24">18-24</MenuItem>
+                                            <MenuItem value="25-34">25-34</MenuItem>
+                                            <MenuItem value="35-44">35-44</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+                        </AccordionDetails>
+                    </Accordion>
+                </Grid>
+
                 {/* Generate Audience Button */}
                 <Grid item xs={12}>
                     <Box display="flex" justifyContent="flex-end" mt={2}>
-                        <Button variant="outlined"  sx={{  padding: 1, border: '1px solid #00ADEB', color: '#00ADEB', fontSize: '18px', fontWeight: 500 ,borderRadius:'25px' , paddingX:2}}>
+                        <Button variant="outlined" sx={{ padding: 1, border: '1px solid #00ADEB', color: '#00ADEB', fontSize: '18px', fontWeight: 500, borderRadius: '25px', paddingX: 2 }}>
                             Generate Audience
                         </Button>
                     </Box>
@@ -187,10 +252,10 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
 
             {/* Footer Buttons */}
             <Box mt={4} display="flex" justifyContent="space-between" gap={2}>
-                <Button variant="outlined" onClick={prevStep} sx={{ width: '100%', padding: 1, border: '1px solid #00ADEB', color: '#00ADEB', fontSize: '18px', fontWeight: 500 }}>
-                    Discard
+                <Button variant="outlined" onClick={prevStep} sx={{ width: '100%', padding: 1, border: '1px solid #00ADEB', color: '#00ADEB', fontSize: '18px', fontWeight: 500, borderRadius: '25px' }}>
+                    Back
                 </Button>
-                <Button variant="contained" type="button" onClick={handleNext} sx={{ width: '100%', padding: 1, color: '#fff', fontSize: '18px', fontWeight: 500, backgroundColor: '#00ADEB' }}>
+                <Button variant="contained" onClick={handleNext} sx={{ width: '100%', padding: 1, background: '#00ADEB', color: '#fff', fontSize: '18px', fontWeight: 500, borderRadius: '25px' }}>
                     Next
                 </Button>
             </Box>
