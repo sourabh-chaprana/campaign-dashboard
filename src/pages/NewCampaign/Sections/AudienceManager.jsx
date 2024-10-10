@@ -67,6 +67,34 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
 
     console.log('socketValue',socketValue)
 
+
+
+    // const fetchPrimaryOptions = useCallback(
+    //     async (attributeCode) => {
+    //         if (primaryOptions[attributeCode]) return;
+    //         try {
+    //             await dispatch(fetchPrimaryOptionsSlice(attributeCode)).unwrap();
+    //             const fetchedOptions = audienceData.primaryOption[attributeCode];
+    //             setPrimaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
+    //         } catch (error) {
+    //             console.error('Failed to fetch primary options:', error);
+    //         }
+    //     },[audienceData.primaryOption, dispatch,primaryOption]
+    // );
+
+    // const fetchSecondaryOptions = useCallback(
+    //     async (attributeCode) => {
+    //         if (secondaryOptions[attributeCode]) return;
+    //         try {
+    //             await dispatch(fetchSecondaryOptionsSlice(attributeCode)).unwrap();
+    //             const fetchedOptions = audienceData.secondaryOptions[attributeCode];
+    //             setSecondaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
+    //         } catch (error) {
+    //             console.error('Failed to fetch secondary options:', error);
+    //         }
+    //     },[audienceData.secondaryOptions,dispatch,audienceData.secondaryOptions]
+    // );
+
     // Fetch primary and secondary attributes on component load
     useEffect(() => {
         const fetchAttributes = async () => {
@@ -96,37 +124,50 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
     useEffect(() => {
         if (audienceData?.primary) {
             setAttributes(audienceData.primary);
-            console.log('fsfsfsf',audienceData)
+          
         }
         if (audienceData?.secondary) {
             setSecondaryAttributes(audienceData.secondary || []);
         }
     }, [audienceData]);
 
-    const fetchPrimaryOptions = async (attributeCode) => {
-        if (primaryOptions[attributeCode]) return;
-        try {
-            await dispatch(fetchPrimaryOptionsSlice(attributeCode)).unwrap();
-            const fetchedOptions = audienceData.primaryOption[attributeCode];
-            setPrimaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
-        } catch (error) {
-            console.error('Failed to fetch primary options:', error);
-        }
-    };
+    const fetchPrimaryOptions = useCallback(
+        async (attributeCode) => {
+            if (primaryOptions[attributeCode]) return;
+            try {
+                await dispatch(fetchPrimaryOptionsSlice(attributeCode)).unwrap();
+                const fetchedOptions = audienceData.primaryOption[attributeCode];
+                setPrimaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
+            } catch (error) {
+                console.error('Failed to fetch primary options:', error);
+            }
+        },[audienceData.primaryOption, dispatch,primaryOptions]
+    );
 
-    const fetchSecondaryOptions = async (attributeCode) => {
-        if (secondaryOptions[attributeCode]) return;
-        try {
-            await dispatch(fetchSecondaryOptionsSlice(attributeCode)).unwrap();
-            const fetchedOptions = audienceData.secondaryOptions[attributeCode];
-            setSecondaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
-        } catch (error) {
-            console.error('Failed to fetch secondary options:', error);
-        }
-    };
+    const fetchSecondaryOptions = useCallback(
+        async (attributeCode) => {
+            if (secondaryOptions[attributeCode]) return;
+            try {
+                await dispatch(fetchSecondaryOptionsSlice(attributeCode)).unwrap();
+                const fetchedOptions = audienceData.secondaryOptions[attributeCode];
+                setSecondaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
+            } catch (error) {
+                console.error('Failed to fetch secondary options:', error);
+            }
+        },[audienceData.secondaryOptions,dispatch,secondaryOptions]
+    );
 
     const handleAutocompleteChange = useCallback((attributeCode, type) => async (event, newValue) => {
         console.log('attributeCode',type,attributeCode,newValue)
+
+       
+        handleChange({
+            target: {
+                name: attributeCode, 
+                value: newValue,     
+                       
+            },
+        });
 
         if(type === 'PRIMARY'){
             const valueString = newValue.join(',')
@@ -137,47 +178,49 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                   "type": type
                 }
             
-
             const data = {
                 attributes: [attributes] 
             };
          var response =  await dispatch(fetchDiscoverIdSlice(data)).unwrap();
          setSocketId(response.requestId)
         }
-        handleChange({
-            target: {
-                name: attributeCode, 
-                value: newValue,     
-                       
-            },
-        });
     }, [handleChange]);
 
     // New effect to fetch primary options immediately after primary attributes are loaded
-  useEffect(() => {
-    const fetchAllPrimaryOptions = async () => {
-      for (const attribute of attributes) {
-        await fetchPrimaryOptions(attribute.attributeCode);
-      }
-    };
- 
-    if (attributes.length > 0) {
-      fetchAllPrimaryOptions();
-    }
-  }, [attributes, fetchPrimaryOptions]);
- 
-  // New effect to fetch secondary options immediately after secondary attributes are loaded
-  useEffect(() => {
-    const fetchAllSecondaryOptions = async () => {
-      for (const attribute of secondaryAttributes) {
-        await fetchSecondaryOptions(attribute.attributeCode);
-      }
-    };
- 
-    if (secondaryAttributes.length > 0) {
-      fetchAllSecondaryOptions();
-    }
-  }, [fetchSecondaryOptions, secondaryAttributes]);
+    useEffect(() => {
+        const fetchAllPrimaryOptions = async () => {
+            try {
+                const fetchPromises = attributes.map((attribute) => fetchPrimaryOptions(attribute.attributeCode));
+                await Promise.all(fetchPromises);
+            } catch (error) {
+                console.error('Error fetching primary options:', error);
+            }
+        };
+    
+        if (attributes.length > 0) {
+            fetchAllPrimaryOptions();
+        }
+        // Dependencies only include attributes to avoid refetching infinitely
+    }, [attributes]);
+    
+    // Effect for fetching secondary options
+    useEffect(() => {
+        const fetchAllSecondaryOptions = async () => {
+            try {
+                const fetchPromises = secondaryAttributes.map((attribute) => fetchSecondaryOptions(attribute.attributeCode));
+                await Promise.all(fetchPromises);
+            } catch (error) {
+                console.error('Error fetching secondary options:', error);
+            }
+        };
+    
+        if (secondaryAttributes.length > 0) {
+            fetchAllSecondaryOptions();
+        }
+        // Dependencies only include secondaryAttributes to avoid refetching infinitely
+    }, [secondaryAttributes]);
+    
+
     return (
         <form>
             <Grid container spacing={2}>
@@ -188,7 +231,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                     <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '20px', color: '#525252' }}>Demographic Reach</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '18px', textAlign: 'end', fontStyle: 'italic', color: '#00ADEB' }}>Audience Count- 50,00,000</Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '18px', textAlign: 'end', fontStyle: 'italic', color: '#00ADEB' }}>Audience Count- {socketValue? socketValue :'Select the fields to reflect count'}</Typography>
                 </Grid> 
 
                 {/* Primary Attributes Card */}
