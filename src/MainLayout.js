@@ -10,11 +10,9 @@ import DashboardCard from "./pages/dashboard";
 // import Outlate from "react-router-dom"
 import { Outlet } from "react-router-dom";
 
-
-
 const MainLayout = () => {
   const [leftOpen, setLeftOpen] = useState(true);
-  const [rightOpen, setRightOpen] = useState(false);
+  const [rightOpen, setRightOpen] = useState(true);
 
   const toggleLeftDrawer = () => {
     setLeftOpen(!leftOpen);
@@ -25,21 +23,19 @@ const MainLayout = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh",  }}>
+    <Box sx={{ display: "flex", height: "100vh" }}>
       {/* Left Sidebar */}
       <LeftSidebar open={leftOpen} toggleDrawer={toggleLeftDrawer} />
 
       {/* Main Dashboard Content */}
 
-
-      
       <Box
         sx={{
           flexGrow: 1,
           padding: 3,
           transition: "margin-left 0.3s ease-out, margin-right 0.3s ease-out",
           backgroundColor: "#f9f9f9",
-          overflowX: "hidden", 
+          overflowX: "hidden",
         }}
       >
         {/* <DashboardCard /> */}

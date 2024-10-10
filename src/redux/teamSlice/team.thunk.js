@@ -30,9 +30,9 @@ export const fetchTeamsDetailsThunk = async (page, rowsPerPage) => {
 
 export const fetchTeamMemberListThunk = async () => {
   try {
-    const token = localStorage.getItem("token");
+    const idToken = localStorage.getItem("idToken");
 
-    if (!token) {
+    if (!idToken) {
       toast.error("Unauthorized access. Please log in.");
     }
 
@@ -41,8 +41,8 @@ export const fetchTeamMemberListThunk = async () => {
       {
         method: "GET", // method
         headers: {
-          Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
-          "Content-Type": "application/json", // Optional
+          Authorization: `Bearer ${idToken}`, // Pass the token in the Authorization header
+          //   "Content-Type": "application/json", // Optional
         },
       }
     );

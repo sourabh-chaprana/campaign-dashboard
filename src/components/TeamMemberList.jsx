@@ -52,25 +52,26 @@ function TeamMembersList() {
 
   return (
     <List>
-      {teamMembers.map((member, index) => (
-        <ListItem key={index}>
-          <ListItemAvatar>
-            <Avatar src={member.img} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={
-              <Typography variant="body1" fontWeight="bold">
-                {member.name}
-              </Typography>
-            }
-            secondary={
-              <Typography variant="body2" color="textSecondary">
-                {member.title}
-              </Typography>
-            }
-          />
-        </ListItem>
-      ))}
+      {teams &&
+        teams.map((member, index) => (
+          <ListItem key={index}>
+            <ListItemAvatar>
+              <Avatar src={"https://mui.com/static/images/avatar/1.jpg"} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={
+                <Typography variant="body1" fontWeight="bold">
+                  {member.userName}
+                </Typography>
+              }
+              secondary={
+                <Typography variant="body2" color="textSecondary">
+                  {member.userEmail}
+                </Typography>
+              }
+            />
+          </ListItem>
+        ))}
     </List>
   );
 }
