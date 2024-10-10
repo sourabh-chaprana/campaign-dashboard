@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchPrimarySelectThunk, fetchPrimaryhOptionsThunk,fetchSecondarySelectThunk,fetchSecondaryOptionsThunk } from "./stepper.thunk";
+import { fetchPrimarySelectThunk, fetchPrimaryhOptionsThunk,fetchSecondarySelectThunk,fetchSecondaryOptionsThunk,fetchDiscoverIdThunk } from "./stepper.thunk";
 
 
 export const fetchPrimarySelectSlice = createAsyncThunk('fetchPrimarySelect', fetchPrimarySelectThunk);
@@ -8,6 +8,10 @@ export const fetchPrimaryOptionsSlice = createAsyncThunk('fetchPrimaryOptions', 
 
 export const fetchSecondarySelectSlice = createAsyncThunk('fetchSelectVal', fetchSecondarySelectThunk);
 export const fetchSecondaryOptionsSlice = createAsyncThunk('fetchSecondaryOptions', fetchSecondaryOptionsThunk);
+
+
+export const fetchDiscoverIdSlice = createAsyncThunk('fetchDiscoverId', fetchDiscoverIdThunk);
+
 
 
 
