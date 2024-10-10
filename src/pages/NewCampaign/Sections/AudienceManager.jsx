@@ -10,43 +10,64 @@ import {
     Chip,
 } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-
+import { fetchPrimarySelectSlice,fetchPrimaryOptionsSlice } from '../../../redux/stepperSlice/stepper.slice';
+import { useDispatch,useSelector } from 'react-redux';
 const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNext }) => {
+    const dispatch = useDispatch('');
+    const audienceData = useSelector((state)=>state.stepper)
     const [attributes, setAttributes] = useState([]);
+    const [primaryOptions,setPrimaryOptions] = useState()
     const [options, setOptions] = useState({});
     const [loading, setLoading] = useState(false); // Loading state
 
+    console.log('audienceData',audienceData)
+
     // Fetch attributes on component load
     useEffect(() => {
-        const fetchAttributes = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch('http://13.232.49.252:7010/api/dxe/discovery/attributeMapping/PRIMARY/list');
-                const data = await response.json();
-                setAttributes(data);
-            } catch (error) {
-                console.error('Error fetching attributes:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+        // const fetchAttributes = async () => {
+        //     setLoading(true);
+        //     try {
+        //         const response = await fetch('http://13.232.49.252:7010/api/dxe/discovery/attributeMapping/PRIMARY/list');
+        //         const data = await response.json();
+        //         console.log('11111111111111--------------',data)
+        //         setAttributes(data);
+        //     } catch (error) {
+        //         console.error('Error fetching attributes:', error);
+        //     } finally {
+        //         setLoading(false);
+        //     }
+        // };
 
-        fetchAttributes();
-    }, []);
+        // fetchAttributes();
+     dispatch(fetchPrimarySelectSlice())
+
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (audienceData?.primary && audienceData?.primary.length) {
+            setAttributes(audienceData);
+        }
+        if (audienceData?.primaryOption && audienceData?.primaryOption.length) {
+            setPrimaryOptions(audienceData);
+        }
+    }, [audienceData]);
+    
 
     // Fetch options for a specific attribute
     const fetchOptions = async (attributeCode) => {
         if (options[attributeCode]) return; // Avoid fetching if already fetched
         setLoading(true);
-        try {
-            const response = await fetch(`http://13.232.49.252:7010/api/dxe/discovery/attribute/${attributeCode}/possibleValues`);
-            const data = await response.json();
-            setOptions((prev) => ({ ...prev, [attributeCode]: data }));
-        } catch (error) {
-            console.error(`Error fetching options for ${attributeCode}:`, error);
-        } finally {
-            setLoading(false);
-        }
+        dispatch(fetchPrimaryOptionsSlice(attributeCode))
+       
+        // try {
+        //     const response = await fetch(`http://13.232.49.252:7010/api/dxe/discovery/attribute/${attributeCode}/possibleValues`);
+        //     const data = await response.json();
+            setOptions((prev) => ({ ...prev, [attributeCode]: primaryOptions }));
+        // } catch (error) {
+        //     console.error(`Error fetching options for ${attributeCode}:`, error);
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
     // Handle selection changes in Autocomplete
@@ -72,7 +93,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                     </Grid>
                 )}
 
-                {!loading && attributes.map((attribute) => (
+                {!loading && attributes?.map((attribute) => (
                     <Grid item xs={12} key={attribute.id}>
                         <Typography className={classes.label}>{attribute.attributeName}
                           
