@@ -35,6 +35,37 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
     const [secondaryAttributes, setSecondaryAttributes] = useState([]);
     const [loadingPrimary, setLoadingPrimary] = useState(false);
     const [loadingSecondary, setLoadingSecondary] = useState(false);
+    const [socketValue, setSocketValue] = useState(null);
+    const [socket, setSocket] = useState(null);
+    const [socketId,setSocketId] = useState(null)
+
+
+     // WebSocket Connection
+     useEffect(() => {
+        if(socketId){
+        const ws = new WebSocket(`ws://13.232.49.252:7040/api/dxe/websocket/websocket?id=${socketId}`); 
+
+        ws.onmessage = (event) => {
+            const messageData = event?.data; 
+            setSocketValue(messageData);
+        };
+
+        ws.onopen = () => {
+            console.log('WebSocket connection opened.');
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket connection closed.');
+        };
+
+        setSocket(ws);
+        return () => {
+            ws.close();
+        };
+    }
+    }, [socketId]); 
+
+    console.log('socketValue',socketValue)
 
     // Fetch primary and secondary attributes on component load
     useEffect(() => {
@@ -94,18 +125,25 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
         }
     };
 
-    // const handleAutocompleteChange = useCallback((attributeCode) => (event, newValue) => {
-    //     handleChange({
-    //         target: {
-    //             name: attributeCode,
-    //             value: newValue,
-    //         },
-    //     });
-    // }, [handleChange]);
-    const handleAutocompleteChange = useCallback((attributeCode, type) => (event, newValue) => {
-        // if(type === 'PRIMARY'){
-        //     dispatch(fetchDiscoverIdSlice())
-        // }
+    const handleAutocompleteChange = useCallback((attributeCode, type) => async (event, newValue) => {
+        console.log('attributeCode',type,attributeCode,newValue)
+
+        if(type === 'PRIMARY'){
+            const valueString = newValue.join(',')
+             const attributes = 
+                {
+                  "name":attributeCode ,
+                  "value": valueString,
+                  "type": type
+                }
+            
+
+            const data = {
+                attributes: [attributes] 
+            };
+         var response =  await dispatch(fetchDiscoverIdSlice(data)).unwrap();
+         setSocketId(response.requestId)
+        }
         handleChange({
             target: {
                 name: attributeCode, 
@@ -114,6 +152,32 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
             },
         });
     }, [handleChange]);
+
+    // New effect to fetch primary options immediately after primary attributes are loaded
+  useEffect(() => {
+    const fetchAllPrimaryOptions = async () => {
+      for (const attribute of attributes) {
+        await fetchPrimaryOptions(attribute.attributeCode);
+      }
+    };
+ 
+    if (attributes.length > 0) {
+      fetchAllPrimaryOptions();
+    }
+  }, [attributes, fetchPrimaryOptions]);
+ 
+  // New effect to fetch secondary options immediately after secondary attributes are loaded
+  useEffect(() => {
+    const fetchAllSecondaryOptions = async () => {
+      for (const attribute of secondaryAttributes) {
+        await fetchSecondaryOptions(attribute.attributeCode);
+      }
+    };
+ 
+    if (secondaryAttributes.length > 0) {
+      fetchAllSecondaryOptions();
+    }
+  }, [fetchSecondaryOptions, secondaryAttributes]);
     return (
         <form>
             <Grid container spacing={2}>
