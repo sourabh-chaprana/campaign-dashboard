@@ -102,11 +102,11 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                 </Grid>
 
                 <Grid item xs={6}>
-                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '26px', color: '#525252' }}>Demographic Reach</Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '20px', color: '#525252' }}>Demographic Reach</Typography>
                 </Grid>
 
                 <Grid item xs={6}>
-                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '20px', textAlign: 'end', fontStyle: 'italic', color: '#00ADEB' }}>Audience Count- 50,00,000</Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '18px', textAlign: 'end', fontStyle: 'italic', color: '#00ADEB' }}>Audience Count- 50,00,000</Typography>
                 </Grid> 
 
                 {/* Primary Attributes Card */}
@@ -178,7 +178,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                 {/* Generate Audience Button */}
                 <Grid item xs={12}>
                     <Box display="flex" justifyContent="flex-end" mt={2}>
-                        <Button variant="contained" sx={{ width: 'auto', border: '1px solid #00ADEB', color: '#fff', backgroundColor: '#00ADEB', fontSize: '18px', fontWeight: 500 }}>
+                        <Button variant="outlined"  sx={{  padding: 1, border: '1px solid #00ADEB', color: '#00ADEB', fontSize: '18px', fontWeight: 500 ,borderRadius:'25px' , paddingX:2}}>
                             Generate Audience
                         </Button>
                     </Box>
