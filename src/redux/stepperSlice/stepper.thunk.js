@@ -19,12 +19,12 @@ export const fetchPrimaryhOptionsThunk = async (attributeCode) => {
     try {
         const response = await fetch(`http://13.232.49.252:7010/api/dxe/discovery/attribute/${attributeCode}/possibleValues`);
         const data = await response.json();
-       
+        return { attributeCode, data }; // Return both attributeCode and data
     } catch (error) {
         console.error(`Error fetching options for ${attributeCode}:`, error);
-    } 
+        throw error; // Rethrow the error to be handled in async action
+    }
 }
-
 
 // export const fetchSecondarySelectThunk = async (page, rowsPerPage) => {
 //     try {

@@ -39,17 +39,20 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
         // };
 
         // fetchAttributes();
-     dispatch(fetchPrimarySelectSlice())
+     dispatch(fetchPrimarySelectSlice()).unwrap();
 
     }, [dispatch]);
 
     useEffect(() => {
         if (audienceData?.primary && audienceData?.primary.length) {
-            setAttributes(audienceData);
+            setAttributes(audienceData?.primary);
         }
-        if (audienceData?.primaryOption && audienceData?.primaryOption.length) {
-            setPrimaryOptions(audienceData);
-        }
+        // if (audienceData?.primaryOption && audienceData?.primaryOption.length) {
+        //     setPrimaryOptions(audienceData?.primaryOption);
+        // }
+
+        
+        
     }, [audienceData]);
     
 
@@ -58,10 +61,11 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
         if (options[attributeCode]) return; // Avoid fetching if already fetched
         setLoading(true);
         dispatch(fetchPrimaryOptionsSlice(attributeCode))
-       
         // try {
         //     const response = await fetch(`http://13.232.49.252:7010/api/dxe/discovery/attribute/${attributeCode}/possibleValues`);
         //     const data = await response.json();
+            setOptions((prev) => ({ ...prev, [attributeCode]: primaryOptions }));
+            const primaryOptions = audienceData.primaryOption[attributeCode]; // Get the options from Redux state
             setOptions((prev) => ({ ...prev, [attributeCode]: primaryOptions }));
         // } catch (error) {
         //     console.error(`Error fetching options for ${attributeCode}:`, error);
