@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   List,
   ListItem,
@@ -7,6 +7,9 @@ import {
   Avatar,
   Typography,
 } from "@mui/material";
+
+import { fetchTeamMemberListSlice } from "../redux/teamSlice/team.slice";
+import { useSelector, useDispatch } from "react-redux";
 
 const teamMembers = [
   {
@@ -37,6 +40,16 @@ const teamMembers = [
 ];
 
 function TeamMembersList() {
+  const { teams } = useSelector((state) => state.teamsDetails);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTeamMemberListSlice());
+  }, [dispatch]);
+
+  console.log(teams, "Team members list");
+
   return (
     <List>
       {teamMembers.map((member, index) => (
