@@ -38,6 +38,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
     const [socketValue, setSocketValue] = useState(null);
     const [socket, setSocket] = useState(null);
     const [socketId,setSocketId] = useState(null)
+    const [discoverFields,setDiscoverFields] = useState([])
 
 
      // WebSocket Connection
@@ -65,37 +66,7 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
     }
     }, [socketId]); 
 
-    console.log('socketValue',socketValue)
-
-
-
-    // const fetchPrimaryOptions = useCallback(
-    //     async (attributeCode) => {
-    //         if (primaryOptions[attributeCode]) return;
-    //         try {
-    //             await dispatch(fetchPrimaryOptionsSlice(attributeCode)).unwrap();
-    //             const fetchedOptions = audienceData.primaryOption[attributeCode];
-    //             setPrimaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
-    //         } catch (error) {
-    //             console.error('Failed to fetch primary options:', error);
-    //         }
-    //     },[audienceData.primaryOption, dispatch,primaryOption]
-    // );
-
-    // const fetchSecondaryOptions = useCallback(
-    //     async (attributeCode) => {
-    //         if (secondaryOptions[attributeCode]) return;
-    //         try {
-    //             await dispatch(fetchSecondaryOptionsSlice(attributeCode)).unwrap();
-    //             const fetchedOptions = audienceData.secondaryOptions[attributeCode];
-    //             setSecondaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
-    //         } catch (error) {
-    //             console.error('Failed to fetch secondary options:', error);
-    //         }
-    //     },[audienceData.secondaryOptions,dispatch,audienceData.secondaryOptions]
-    // );
-
-    // Fetch primary and secondary attributes on component load
+   
     useEffect(() => {
         const fetchAttributes = async () => {
             setLoadingPrimary(true);
@@ -157,38 +128,41 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
         },[audienceData.secondaryOptions,dispatch,secondaryOptions]
     );
 
-    const handleAutocompleteChange = useCallback((attributeCode, type) => async (event, newValue) => {
-        console.log('attributeCode',type,attributeCode,newValue)
+    const [allAttributes, setAllAttributes] = useState([]);
+
+const handleAutocompleteChange = useCallback((attributeCode, type) => async (event, newValue) => {
+    // Update Formik
+    handleChange({
+        target: {
+            name: attributeCode,
+            value: newValue,
+        },
+    });
+
+    if (type === 'PRIMARY') {
+        // Map new values to attributes
+        const newAttributes = newValue.map(value => ({
+            name: attributeCode,
+            value: value,
+            type: type
+        }));
 
        
-        handleChange({
-            target: {
-                name: attributeCode, 
-                value: newValue,     
-                       
-            },
-        });
+        const updatedAttributes = [...allAttributes.filter(
+            attr => !(attr.name === attributeCode && newValue.includes(attr.value))
+        )];
 
-        if(type === 'PRIMARY' ){
-            if(newValue.length){
-            const valueString = newValue.join(',')
-             const attributes = 
-                {
-                  "name":attributeCode ,
-                  "value": valueString,
-                  "type": type
-                }
-            
-            const data = {
-                attributes: [attributes] 
-            };
-         var response =  await dispatch(fetchDiscoverIdSlice(data)).unwrap();
-         setSocketId(response.requestId)
-         }else{
-            setSocket(null)
-         }
-        }
-    }, [handleChange]);
+        setAllAttributes([...updatedAttributes, ...newAttributes]);
+
+        const data = { attributes: [...updatedAttributes, ...newAttributes] };
+        const response = await dispatch(fetchDiscoverIdSlice(data)).unwrap();
+        setSocketId(response.requestId);
+
+        if (newValue.length === 0) setSocket(null);
+    }
+}, [handleChange, allAttributes, dispatch, setSocketId, setSocket]);
+
+    
 
     // New effect to fetch primary options immediately after primary attributes are loaded
     useEffect(() => {

@@ -52,8 +52,8 @@ function TeamMembersList() {
 
   return (
     <List>
-      {teams &&
-        teams.map((member, index) => (
+      {teams.length &&
+        teams?.map((member, index) => (
           <ListItem key={index}>
             <ListItemAvatar>
               <Avatar src={"https://mui.com/static/images/avatar/1.jpg"} />
