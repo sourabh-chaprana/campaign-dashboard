@@ -18,10 +18,8 @@ const AdditionalInfo = ({ handleChange, formValues, classes, prevStep }) => {
                 />
             </Box>
 
-            {/* Campaign details summary */}
-
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 4 }}>
-                <Box sx={{ width: '48%', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
+            <Box sx={{ width: '60%', margin: 'auto', padding: 4, display: 'flex', justifyContent: 'space-between' }}>
+                <Box sx={{ width: '48%' }}>
                     <Typography py={1} className={classes.additionInfo}>Campaign Title:</Typography>
                     <Typography py={1} className={classes.additionInfo}>Demographic Location:</Typography>
                     <Typography py={1} className={classes.additionInfo}>Device:</Typography>
@@ -34,7 +32,7 @@ const AdditionalInfo = ({ handleChange, formValues, classes, prevStep }) => {
             </Box>
 
             {/* Buttons */}
-            <Box mt={4} display="flex" justifyContent="space-between" gap={2}>
+            <Box display="flex" justifyContent="space-between" gap={2} sx={{flexDirection: { xs: 'column', sm: 'row' }}}>
                 <Button variant="outlined" onClick={prevStep} sx={{ width: '100%', padding: 1, border: '1px solid #00ADEB', color: '#00ADEB', fontSize: '18px', fontWeight: 500 }}>
                     Save For Draft
                 </Button>
