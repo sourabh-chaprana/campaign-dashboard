@@ -15,7 +15,7 @@ const initialState = {
     primary: [],
     secondary: [],
     primaryOption: {}, 
-    secondaryOption: {},
+    secondaryOptions: {},
     totalItems: 0,
     data: null,
     status: 'idle',
@@ -79,8 +79,8 @@ const stepperSlice = createSlice({
             .addCase(fetchSecondaryOptionsSlice.fulfilled, (state, action) => {
                 const { attributeCode, data } = action.payload;
                 state.loading = false;
-                state.secondaryOption = {
-                    ...state.secondaryOption,
+                state.secondaryOptions = {
+                    ...state.secondaryOptions,
                     [attributeCode]: data
                 };
             })

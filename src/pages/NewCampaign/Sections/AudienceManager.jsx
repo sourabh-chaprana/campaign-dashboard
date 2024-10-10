@@ -9,7 +9,12 @@ import {
     Card,
     CardContent,
 } from '@mui/material';
-import { fetchPrimarySelectSlice, fetchPrimaryOptionsSlice, fetchSecondarySelectSlice } from '../../../redux/stepperSlice/stepper.slice';
+import {
+    fetchPrimarySelectSlice,
+    fetchPrimaryOptionsSlice,
+    fetchSecondarySelectSlice,
+    fetchSecondaryOptionsSlice,
+} from '../../../redux/stepperSlice/stepper.slice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNext }) => {
@@ -18,39 +23,65 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
     const [attributes, setAttributes] = useState([]);
     const [primaryOptions, setPrimaryOptions] = useState({});
     const [secondaryOptions, setSecondaryOptions] = useState({});
-    const [loading, setLoading] = useState(false);
+    const [secondaryAttributes, setSecondaryAttributes] = useState([]); // Initialize as an array
+    const [loadingPrimary, setLoadingPrimary] = useState(false);
+    const [loadingSecondary, setLoadingSecondary] = useState(false);
 
-    // Fetch attributes on component load
+    // Fetch primary and secondary attributes on component load
     useEffect(() => {
-        setLoading(true);
-        dispatch(fetchPrimarySelectSlice()).unwrap();
-        dispatch(fetchSecondarySelectSlice()).unwrap().finally(() => {
-            setLoading(false);
-        });
+        const fetchAttributes = async () => {
+            setLoadingPrimary(true);
+            try {
+                await dispatch(fetchPrimarySelectSlice()).unwrap();
+            } catch (error) {
+                console.error('Failed to fetch primary attributes:', error);
+            } finally {
+                setLoadingPrimary(false);
+            }
+
+            setLoadingSecondary(true);
+            try {
+                await dispatch(fetchSecondarySelectSlice()).unwrap();
+            } catch (error) {
+                console.error('Failed to fetch secondary attributes:', error);
+            } finally {
+                setLoadingSecondary(false);
+            }
+        };
+
+        fetchAttributes();
     }, [dispatch]);
 
     // Update attributes and options once fetched
     useEffect(() => {
-        if (audienceData?.primary && audienceData?.primary.length) {
-            setAttributes(audienceData?.primary);
+        if (audienceData?.primary) {
+            setAttributes(audienceData.primary);
         }
-        if (audienceData?.secondary && audienceData?.secondary.length) {
-            setSecondaryOptions(audienceData?.secondary);
+        if (audienceData?.secondary) {
+            setSecondaryAttributes(audienceData.secondary || []); // Ensure it's always an array
         }
     }, [audienceData]);
 
     const fetchPrimaryOptions = async (attributeCode) => {
-        if (primaryOptions[attributeCode]) return;
-        await dispatch(fetchPrimaryOptionsSlice(attributeCode)).unwrap();
-        const fetchedOptions = audienceData.primaryOption[attributeCode];
-        setPrimaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
+        if (primaryOptions[attributeCode]) return; // Avoid fetching again if options already loaded
+        try {
+            await dispatch(fetchPrimaryOptionsSlice(attributeCode)).unwrap();
+            const fetchedOptions = audienceData.primaryOption[attributeCode];
+            setPrimaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
+        } catch (error) {
+            console.error('Failed to fetch primary options:', error);
+        }
     };
 
     const fetchSecondaryOptions = async (attributeCode) => {
-        if (secondaryOptions[attributeCode]) return;
-        await dispatch(fetchPrimaryOptionsSlice(attributeCode)).unwrap();
-        const fetchedOptions = audienceData.primaryOption[attributeCode];
-        setSecondaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
+        if (secondaryOptions[attributeCode]) return; // Avoid fetching again if options already loaded
+        try {
+            await dispatch(fetchSecondaryOptionsSlice(attributeCode)).unwrap();
+            const fetchedOptions = audienceData.secondaryOptions[attributeCode];
+            setSecondaryOptions((prev) => ({ ...prev, [attributeCode]: fetchedOptions }));
+        } catch (error) {
+            console.error('Failed to fetch secondary options:', error);
+        }
     };
 
     const handleAutocompleteChange = useCallback((attributeCode) => (event, newValue) => {
@@ -65,38 +96,48 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
     return (
         <form>
             <Grid container spacing={2}>
+         
                 <Grid item xs={12}>
                     <Typography sx={{ fontWeight: 'bold', fontSize: '28px' }}>Audience Manager</Typography>
                 </Grid>
 
+                <Grid item xs={6}>
+                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '26px', color: '#525252' }}>Demographic Reach</Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '20px', textAlign: 'end', fontStyle: 'italic', color: '#00ADEB' }}>Audience Count- 50,00,000</Typography>
+                </Grid> 
+
                 {/* Primary Attributes Card */}
                 <Grid item xs={12}>
-                    <Card  sx={{ boxShadow: 'none', border: '1px solid #3333', borderRadius:'10px',marginBottom:'50px' }}>
+                    <Card sx={{ boxShadow: 'none', border: '1px solid #3333', borderRadius: '10px', marginBottom: '50px' }}>
                         <CardContent>
                             <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>Primary Attributes</Typography>
-                            {loading && (
-                                <Typography variant="body1" color="textSecondary">Loading attributes...</Typography>
+                            {loadingPrimary ? (
+                                <Typography variant="body1" color="textSecondary">Loading primary attributes...</Typography>
+                            ) : (
+                                attributes.map((attribute) => (
+                                    <Grid item xs={12} key={attribute.id} mt={2}>
+                                        <Typography className={classes.label}>{attribute.attributeName}</Typography>
+                                        <Autocomplete
+                                            multiple
+                                            options={primaryOptions[attribute.attributeCode] || []}
+                                            getOptionLabel={(option) => option.name || option}
+                                            value={formValues[attribute.attributeCode] || []}
+                                            onChange={handleAutocompleteChange(attribute.attributeCode)}
+                                            onOpen={() => fetchPrimaryOptions(attribute.attributeCode)}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="outlined"
+                                                    className={classes.textField}
+                                                />
+                                            )}
+                                        />
+                                    </Grid>
+                                ))
                             )}
-                            {!loading && attributes?.map((attribute) => (
-                                <Grid item xs={12} key={attribute.id} mt={2}>
-                                    <Typography className={classes.label}>{attribute.attributeName}</Typography>
-                                    <Autocomplete
-                                        multiple
-                                        options={primaryOptions[attribute.attributeCode] || []}
-                                        getOptionLabel={(option) => option.name || option}
-                                        value={formValues[attribute.attributeCode] || []}
-                                        onChange={handleAutocompleteChange(attribute.attributeCode)}
-                                        onOpen={() => fetchPrimaryOptions(attribute.attributeCode)}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="outlined"
-                                                className={classes.textField}
-                                            />
-                                        )}
-                                    />
-                                </Grid>
-                            ))}
                         </CardContent>
                     </Card>
                 </Grid>
@@ -106,29 +147,30 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                     <Card sx={{ boxShadow: 'none', border: '1px solid #3333' }}>
                         <CardContent>
                             <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>Secondary Attributes</Typography>
-                            {loading && (
-                                <Typography variant="body1" color="textSecondary">Loading attributes...</Typography>
+                            {loadingSecondary ? (
+                                <Typography variant="body1" color="textSecondary">Loading secondary attributes...</Typography>
+                            ) : (
+                                secondaryAttributes.map((attribute) => (
+                                    <Grid item xs={12} key={attribute.id} mt={2}>
+                                        <Typography className={classes.label}>{attribute.attributeName}</Typography>
+                                        <Autocomplete
+                                            multiple
+                                            options={secondaryOptions[attribute.attributeCode] || []}
+                                            getOptionLabel={(option) => option.name || option}
+                                            value={formValues[attribute.attributeCode] || []}
+                                            onChange={handleAutocompleteChange(attribute.attributeCode)}
+                                            onOpen={() => fetchSecondaryOptions(attribute.attributeCode)}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="outlined"
+                                                    className={classes.textField}
+                                                />
+                                            )}
+                                        />
+                                    </Grid>
+                                ))
                             )}
-                            {!loading && Object.values(secondaryOptions)?.map((attribute) => (
-                                <Grid item xs={12} key={attribute.id} mt={2}>
-                                    <Typography className={classes.label}>{attribute.attributeName}</Typography>
-                                    <Autocomplete
-                                        multiple
-                                        options={secondaryOptions[attribute.attributeCode] || []}
-                                        getOptionLabel={(option) => option.name || option}
-                                        value={formValues[attribute.attributeCode] || []}
-                                        onChange={handleAutocompleteChange(attribute.attributeCode)}
-                                        onOpen={() => fetchSecondaryOptions(attribute.attributeCode)}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="outlined"
-                                                className={classes.textField}
-                                            />
-                                        )}
-                                    />
-                                </Grid>
-                            ))}
                         </CardContent>
                     </Card>
                 </Grid>
