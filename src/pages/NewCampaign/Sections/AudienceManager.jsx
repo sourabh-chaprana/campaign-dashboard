@@ -1,128 +1,106 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, FormControl, Grid, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+    Box,
+    Button,
+    Grid,
+    InputAdornment,
+    TextField,
+    Typography,
+    Autocomplete,
+    Chip,
+} from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNext }) => {
+    const [attributes, setAttributes] = useState([]);
+    const [options, setOptions] = useState({});
+    const [loading, setLoading] = useState(false); // Loading state
+
+    // Fetch attributes on component load
+    useEffect(() => {
+        const fetchAttributes = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch('http://13.232.49.252:7010/api/dxe/discovery/attributeMapping/PRIMARY/list');
+                const data = await response.json();
+                setAttributes(data);
+            } catch (error) {
+                console.error('Error fetching attributes:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAttributes();
+    }, []);
+
+    // Fetch options for a specific attribute
+    const fetchOptions = async (attributeCode) => {
+        if (options[attributeCode]) return; // Avoid fetching if already fetched
+        setLoading(true);
+        try {
+            const response = await fetch(`http://13.232.49.252:7010/api/dxe/discovery/attribute/${attributeCode}/possibleValues`);
+            const data = await response.json();
+            setOptions((prev) => ({ ...prev, [attributeCode]: data }));
+        } catch (error) {
+            console.error(`Error fetching options for ${attributeCode}:`, error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Handle selection changes in Autocomplete
+    const handleAutocompleteChange = useCallback((attributeCode) => (event, newValue) => {
+        handleChange({
+            target: {
+                name: attributeCode, // Use attributeCode as the name for handling
+                value: newValue,
+            }
+        });
+    }, [handleChange]);
+
     return (
         <form>
             <Grid container spacing={2}>
-
                 <Grid item xs={12}>
                     <Typography sx={{ fontWeight: 'bold', fontSize: '28px' }}>Audience Manager</Typography>
                 </Grid>
 
-                <Grid item xs={6}>
-                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '26px', color: '#525252' }}>Demographic Reach</Typography>
-                </Grid>
+                {loading && (
+                    <Grid item xs={12}>
+                        <Typography variant="body1" color="textSecondary">Loading attributes...</Typography>
+                    </Grid>
+                )}
 
-                <Grid item xs={6}>
-                    <Typography variant="h5" sx={{ fontWeight: 400, fontSize: '20px', textAlign: 'end', fontStyle: 'italic', color: '#00ADEB' }}>Audience Count- 50,00,000</Typography>
-                </Grid>
+                {!loading && attributes.map((attribute) => (
+                    <Grid item xs={12} key={attribute.id}>
+                        <Typography className={classes.label}>{attribute.attributeName}
+                          
+                        </Typography>
 
+                        <Autocomplete
+                            multiple
+                            options={options[attribute.attributeCode] || []}
+                            getOptionLabel={(option) => option.name || option} 
+                            value={formValues[attribute.attributeCode] || []}
+                            onChange={handleAutocompleteChange(attribute.attributeCode)}
+                            onOpen={() => fetchOptions(attribute.attributeCode)}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    variant="outlined"
+                                    className={classes.textField}
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        
+                                    }}
+                                />
+                            )}
 
-
-                <Grid item xs={12}>
-                    <Typography className={classes.label}>
-                        Country
-                    </Typography>
-
-                    <TextField
-                        variant="outlined"
-                        name="location"
-                        value={formValues.location}
-                        onChange={handleChange}
-                        className={classes.textField}
-
-                        slotProps={{
-                            input: {
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <LocationOnIcon />
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
-                    />
-                </Grid>
-
-                <Grid item xs={12}>
-                    <Typography className={classes.label}>
-                        State
-                    </Typography>
-
-                    <TextField
-                        variant="outlined"
-                        name="location"
-                        value={formValues.location}
-                        onChange={handleChange}
-                        className={classes.textField}
-
-                        slotProps={{
-                            input: {
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <LocationOnIcon />
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
-                    />
-                </Grid>
-
-                <Grid item xs={12}>
-                    <Typography className={classes.label}>
-                        Parameters
-                    </Typography>
-
-                    <Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1-content"
-                            id="panel1-header"
-                            sx={{ paddingY: '4px' }}
-                        >
-                            <Typography>Click To Add Parameters</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12}>
-                                    <Typography className={classes.label}>
-                                        Device
-                                    </Typography>
-
-                                    <FormControl className={classes.selectField}>
-                                        <Select
-                                            value={formValues.device}
-                                            name="device"
-                                            onChange={handleChange}
-                                        >
-                                            <MenuItem value="iPhone">iPhone</MenuItem>
-                                            <MenuItem value="Android">Android</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography className={classes.label}>
-                                        Age
-                                    </Typography>
-
-                                    <FormControl className={classes.selectField}>
-                                        <Select
-                                            value={formValues.ageGroup}
-                                            name="ageGroup"
-                                            onChange={handleChange}
-                                        >
-                                            <MenuItem value="18-24">18-24</MenuItem>
-                                            <MenuItem value="25-34">25-34</MenuItem>
-                                            <MenuItem value="35-44">35-44</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                            </Grid>
-                        </AccordionDetails>
-                    </Accordion>
-                </Grid>
+                    
+                        />
+                    </Grid>
+                ))}
 
                 <Grid item xs={12}>
                     <Box display="flex" justifyContent="flex-end">
@@ -137,12 +115,12 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
                 <Button variant="outlined" onClick={prevStep} sx={{ width: '100%', padding: 1, border: '1px solid #00ADEB', color: '#00ADEB', fontSize: '18px', fontWeight: 500 }}>
                     Discard
                 </Button>
-                <Button variant="contained" type="submit" onClick={handleNext} sx={{ width: '100%', padding: 1, color: '#fff', fontSize: '18px', fontWeight: 500, backgroundColor: '#00ADEB' }}>
+                <Button variant="contained" type="button" onClick={handleNext} sx={{ width: '100%', padding: 1, color: '#fff', fontSize: '18px', fontWeight: 500, backgroundColor: '#00ADEB' }}>
                     Next
                 </Button>
             </Box>
         </form>
-    )
-}
+    );
+};
 
-export default AudienceManager
+export default AudienceManager;
