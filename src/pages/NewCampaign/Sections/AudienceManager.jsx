@@ -169,7 +169,8 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
             },
         });
 
-        if(type === 'PRIMARY'){
+        if(type === 'PRIMARY' ){
+            if(newValue.length){
             const valueString = newValue.join(',')
              const attributes = 
                 {
@@ -183,6 +184,9 @@ const AudienceManager = ({ handleChange, formValues, classes, prevStep, handleNe
             };
          var response =  await dispatch(fetchDiscoverIdSlice(data)).unwrap();
          setSocketId(response.requestId)
+         }else{
+            setSocket(null)
+         }
         }
     }, [handleChange]);
 
