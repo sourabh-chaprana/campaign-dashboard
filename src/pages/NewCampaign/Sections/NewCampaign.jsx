@@ -15,8 +15,6 @@ const NewCampaign = ({ handleChange, formValues, classes, handleNext }) => {
         }
     };
 
-    console.log("fileUploaded--",fileUploaded);
-
     return (
         <form>
             <Grid container spacing={2}>

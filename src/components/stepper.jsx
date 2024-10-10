@@ -80,11 +80,16 @@ function CreateCampaign() {
   const [formValues, setFormValues] = useState({
     title: '',
     description:'',
+    media:'',
+    startDate:'',
+    endDate:'',
     location: '',
     state: '',
     device: '',
     ageGroup: '',
     additionalInfo: '',
+    countries: [],  // Initialize as an empty array
+    states: [], 
   });
 
   const steps = ['New Campaign', 'Audience Manager', 'Additional Information'];
@@ -100,7 +105,7 @@ function CreateCampaign() {
   const handleChange = (event) => {
     setFormValues({ ...formValues, [event.target.name]: event.target.value });
   };
-
+console.log('formValues',formValues)
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
@@ -145,4 +150,3 @@ function CreateCampaign() {
 }
 
 export default CreateCampaign;
-
