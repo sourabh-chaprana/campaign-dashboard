@@ -35,11 +35,11 @@ const Login = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setErrorMessage(""); // Clear previous error messages
-      const resultAction = await dispatch(authLoginSlice(values));
+      const resultAction = await dispatch(authLoginSlice(values)).unwrap();
 
-      console.log('resultAction',resultAction)
-      if (authLoginSlice.fulfilled.match(resultAction)) {
-        navigate("/dashboard"); 
+      console.log("resultAction", resultAction);
+      if (resultAction) {
+        navigate("/dashboard");
       } else {
         // Handle login failure
         setErrorMessage("Login failed. Please check your credentials."); // Set error message
@@ -54,11 +54,11 @@ const Login = () => {
           <Typography variant="h5" component="div" align="center" gutterBottom>
             Login
           </Typography>
-          {errorMessage && ( // Show error message if it exists
+          {/* {errorMessage && ( // Show error message if it exists
             <Alert severity="error" sx={{ mb: 2 }}>
               {errorMessage}
             </Alert>
-          )}
+          )} */}
           <form onSubmit={formik.handleSubmit}>
             <Box mb={2}>
               <TextField
@@ -87,7 +87,9 @@ const Login = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
-                error={formik.touched.password && Boolean(formik.errors.password)}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
                 helperText={formik.touched.password && formik.errors.password}
               />
             </Box>
