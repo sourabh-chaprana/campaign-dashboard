@@ -1,16 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchPrimarySelectThunk, fetchPrimaryhOptionsThunk } from "./stepper.thunk";
+import { fetchPrimarySelectThunk, fetchPrimaryhOptionsThunk,fetchSecondarySelectThunk,fetchSecondaryOptionsThunk } from "./stepper.thunk";
 
-// Async thunk for fetching primary attributes
-export const fetchPrimarySelectSlice = createAsyncThunk('stepper/fetchPrimarySelect', fetchPrimarySelectThunk);
 
-// Async thunk for fetching primary options by attributeCode
-export const fetchPrimaryOptionsSlice = createAsyncThunk('stepper/fetchPrimaryOptions', fetchPrimaryhOptionsThunk);
+export const fetchPrimarySelectSlice = createAsyncThunk('fetchPrimarySelect', fetchPrimarySelectThunk);
+export const fetchPrimaryOptionsSlice = createAsyncThunk('fetchPrimaryOptions', fetchPrimaryhOptionsThunk);
+
+
+export const fetchSecondarySelectSlice = createAsyncThunk('fetchSelectVal', fetchSecondarySelectThunk);
+export const fetchSecondaryOptionsSlice = createAsyncThunk('fetchSecondaryOptions', fetchSecondaryOptionsThunk);
+
+
 
 const initialState = {
     primary: [],
     secondary: [],
-    primaryOption: {}, // Store options keyed by attributeCode
+    primaryOption: {}, 
     secondaryOption: {},
     totalItems: 0,
     data: null,
@@ -39,7 +43,7 @@ const stepperSlice = createSlice({
                 state.loading = false;
             })
 
-            // Fetch Primary Options for a given attributeCode
+           
             .addCase(fetchPrimaryOptionsSlice.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -47,7 +51,6 @@ const stepperSlice = createSlice({
             .addCase(fetchPrimaryOptionsSlice.fulfilled, (state, action) => {
                 const { attributeCode, data } = action.payload;
                 state.loading = false;
-                // Store options keyed by attributeCode
                 state.primaryOption = {
                     ...state.primaryOption,
                     [attributeCode]: data
@@ -56,7 +59,37 @@ const stepperSlice = createSlice({
             .addCase(fetchPrimaryOptionsSlice.rejected, (state, action) => {
                 state.error = action.error.message;
                 state.loading = false;
-            });
+            })
+            .addCase(fetchSecondarySelectSlice.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchSecondarySelectSlice.fulfilled, (state, action) => {
+                state.secondary = action.payload; // Store the fetched secondary attributes
+                state.loading = false;
+            })
+            .addCase(fetchSecondarySelectSlice.rejected, (state, action) => {
+                state.error = action.error.message;
+                state.loading = false;
+            })
+            .addCase(fetchSecondaryOptionsSlice.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchSecondaryOptionsSlice.fulfilled, (state, action) => {
+                const { attributeCode, data } = action.payload;
+                state.loading = false;
+                state.secondaryOption = {
+                    ...state.secondaryOption,
+                    [attributeCode]: data
+                };
+            })
+            .addCase(fetchSecondaryOptionsSlice.rejected, (state, action) => {
+                state.error = action.error.message;
+                state.loading = false;
+            })
+
+            ;
     },
 });
 
