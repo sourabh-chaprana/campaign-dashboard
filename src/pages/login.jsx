@@ -12,8 +12,12 @@ import {
   Box,
   Container,
   Alert,
+  Grid,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import { authLoginSlice } from "../redux/authSlice/auth.slice";
+import LoginImage from "../assets/Login Illustration 1.svg"
 
 const Login = () => {
   const navigate = useNavigate();
@@ -35,11 +39,11 @@ const Login = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setErrorMessage(""); // Clear previous error messages
-      const resultAction = await dispatch(authLoginSlice(values));
+      const resultAction = await dispatch(authLoginSlice(values)).unwrap();
 
-      console.log('resultAction',resultAction)
-      if (authLoginSlice.fulfilled.match(resultAction)) {
-        navigate("/dashboard"); 
+      console.log("resultAction", resultAction);
+      if (resultAction) {
+        navigate("/dashboard");
       } else {
         // Handle login failure
         setErrorMessage("Login failed. Please check your credentials."); // Set error message
@@ -48,64 +52,130 @@ const Login = () => {
   });
 
   return (
-    <Container maxWidth="xs">
-      <Card sx={{ mt: 8 }}>
-        <CardContent>
-          <Typography variant="h5" component="div" align="center" gutterBottom>
-            Login
-          </Typography>
-          {errorMessage && ( // Show error message if it exists
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {errorMessage}
-            </Alert>
-          )}
-          <form onSubmit={formik.handleSubmit}>
-            <Box mb={2}>
-              <TextField
-                fullWidth
-                id="email"
-                name="email"
-                label="Email"
-                type="email"
-                variant="outlined"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-              />
-            </Box>
+    <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid item xs={false} sm={4} md={6} sx={{ height: '100vh', overflow: 'hidden' }}>
+        <img
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'fill',
+          }} src={LoginImage}>
 
-            <Box mb={2}>
-              <TextField
-                fullWidth
-                id="password"
-                name="password"
-                label="Password"
-                type="password"
-                variant="outlined"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-                error={formik.touched.password && Boolean(formik.errors.password)}
-                helperText={formik.touched.password && formik.errors.password}
-              />
-            </Box>
+        </img>
+      </Grid>
+      <Grid item xs={12} sm={8} md={6} component={Box} display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+        <Container>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Card sx={{ padding: 4, width: '65%', borderRadius: '50px' }}>
+              <CardContent>
+                <Typography variant="h4" gutterBottom sx={{ color: '#153060', fontWeight: '600' }}>
+                  Welcome Back
+                </Typography>
+                {errorMessage && ( // Show error message if it exists
+                  <Alert severity="error" sx={{ mb: 2 }}>
+                    {errorMessage}
+                  </Alert>
+                )}
+                <form onSubmit={formik.handleSubmit}>
+                  <Box mb={2}>
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={formik.isSubmitting}
-            >
-              Login
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </Container>
+                    <Typography sx={{ color: '#153060', fontWeight: '500' }}>
+                      User Name
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      id="email"
+                      name="email"
+                      type="email"
+                      variant="outlined"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.email}
+                      error={formik.touched.email && Boolean(formik.errors.email)}
+                      helperText={formik.touched.email && formik.errors.email}
+                    />
+                  </Box>
+
+                  <Box mb={2}>
+                    <Typography sx={{ color: '#153060', fontWeight: '500' }}>
+                      Password
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      id="password"
+                      name="password"
+                      type="password"
+                      variant="outlined"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
+                      error={formik.touched.password && Boolean(formik.errors.password)}
+                      helperText={formik.touched.password && formik.errors.password}
+                    />
+                    <FormControlLabel
+                      sx={{ fontSize: '14px', fontWeight: '400' }}
+                      control={<Checkbox sx={{
+                        '& .MuiSvgIcon-root': {
+                          color: '#153060'
+                        },
+                      }} />}
+                      label="Remember me on this computer"
+                    />
+                  </Box>
+
+                  <Button
+                    type="submit"
+                    fullWidth
+                    sx={{ width: '100%', padding: 1, color: '#fff', fontSize: '18px', fontWeight: 500, backgroundColor: '#00ADEB' }}
+                    variant="contained"
+                    color="primary"
+                    disabled={formik.isSubmitting}
+                  >
+                    Login
+                  </Button>
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Typography
+                      sx={{
+                        paddingTop: 4,
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        color: '#F2451C',
+                        cursor: 'pointer',
+                        display: 'inline-block', 
+                      }}
+                    >
+                      Forgot Password?
+                    </Typography>
+                  </Box>
+                </form>
+              </CardContent>
+            </Card>
+          </Box>
+        </Container>
+      </Grid>
+    </Grid>
   );
 };
 
 export default Login;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

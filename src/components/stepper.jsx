@@ -79,6 +79,7 @@ function CreateCampaign() {
   const [activeStep, setActiveStep] = useState(0);
   const [formValues, setFormValues] = useState({
     title: '',
+    description:'',
     location: '',
     state: '',
     device: '',
