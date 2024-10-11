@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 export const authLoginThunk = async (data) => {
   try {
-    const response = await axios.post("http://13.232.49.252:7070/login", data);
+    const response = await axios.post("https://2xojbjl2nd.execute-api.ap-south-1.amazonaws.com/userManagement/login", data);
     console.log("response", response);
     const { accessToken, idToken } = response.data;
     localStorage.setItem("token", accessToken);
