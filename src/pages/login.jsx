@@ -38,7 +38,7 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      // setErrorMessage(""); // Clear previous error messages
+      setErrorMessage(""); // Clear previous error messages
       const resultAction = await dispatch(authLoginSlice(values)).unwrap();
 
       console.log("resultAction", resultAction);
