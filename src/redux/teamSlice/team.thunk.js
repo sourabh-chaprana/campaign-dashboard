@@ -10,7 +10,7 @@ export const fetchTeamsDetailsThunk = async (page, rowsPerPage) => {
       toast.error("Unauthorized access. Please log in.");
     }
     const response = await axios.get(
-      "http://13.232.49.252:7060/api/cm/campaign/list",
+      "https://2xojbjl2nd.execute-api.ap-south-1.amazonaws.com/campaignManagement/api/cm/campaign/list",
       {
         params: {
           pageNumber: page?.page + 1,
@@ -37,7 +37,7 @@ export const fetchTeamMemberListThunk = async () => {
     }
 
     const response = await fetch(
-      "http://13.232.49.252:7070/user/organization",
+      "https://2xojbjl2nd.execute-api.ap-south-1.amazonaws.com/campaignManagement/user/organization",
       {
         method: "GET", // method
         headers: {

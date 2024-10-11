@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export const fetchPrimarySelectThunk = async ( ) => {
     try {
-        const response = await fetch('http://13.232.49.252:7010/api/dxe/discovery/attributeMapping/PRIMARY/list');
+        const response = await fetch('https://2xojbjl2nd.execute-api.ap-south-1.amazonaws.com/discover/api/dxe/discovery/attributeMapping/PRIMARY/list');
         const data = await response.json();
        return data
     } catch (error) {
@@ -17,7 +17,7 @@ export const fetchPrimarySelectThunk = async ( ) => {
 
 export const fetchPrimaryhOptionsThunk = async (attributeCode) => {
     try {
-        const response = await fetch(`http://13.232.49.252:7010/api/dxe/discovery/attribute/${attributeCode}/possibleValues`);
+        const response = await fetch(`https://2xojbjl2nd.execute-api.ap-south-1.amazonaws.com/discover/api/dxe/discovery/attribute/${attributeCode}/possibleValues`);
         const data = await response.json();
         return { attributeCode, data }; 
     } catch (error) {
@@ -28,7 +28,7 @@ export const fetchPrimaryhOptionsThunk = async (attributeCode) => {
 
 export const fetchSecondarySelectThunk = async () => {
     try {
-        const response = await fetch('http://13.232.49.252:7010/api/dxe/discovery/attributeMapping/SECONDARY/list');
+        const response = await fetch('https://2xojbjl2nd.execute-api.ap-south-1.amazonaws.com/discover/api/dxe/discovery/attributeMapping/SECONDARY/list');
         const data = await response.json();
        return data
     } catch (error) {
@@ -41,7 +41,7 @@ export const fetchSecondarySelectThunk = async () => {
 
 export const fetchSecondaryOptionsThunk = async (attributeCode) => {
     try {
-        const response = await fetch(`http://13.232.49.252:7010/api/dxe/discovery/attribute/${attributeCode}/possibleValues`);
+        const response = await fetch(`https://2xojbjl2nd.execute-api.ap-south-1.amazonaws.com/discover/api/dxe/discovery/attribute/${attributeCode}/possibleValues`);
         const data = await response.json();
         return { attributeCode, data }; 
     } catch (error) {
@@ -55,7 +55,7 @@ export const fetchSecondaryOptionsThunk = async (attributeCode) => {
 
 export const fetchDiscoverIdThunk = async (data) => {
     try {
-        const response = await axios.post(`http://13.232.49.252:7010/api/dxe/discovery/discover`,data,{
+        const response = await axios.post(`https://2xojbjl2nd.execute-api.ap-south-1.amazonaws.com/discover/api/dxe/discovery/discover`,data,{
             headers: {
                 'IC': 'IC'
             }
